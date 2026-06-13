@@ -7,11 +7,11 @@
     <body> 
       <header>
     <h1>Emo<span>land</span> 🎈</h1>
-    <p id="header-subtitle">Elige un nivel para empezar a aprender sobre las emociones</p>
+    <p id="header-subtitle">Tria un nivell per començar a aprendre sobre les emocions</p>
   </header>
  
   <div class="scoreboard" id="scoreboard" style="display:none;">
-    <span class="pill">⭐ Aciertos: <span id="score">0</span></span>
+    <span class="pill">⭐ Encerts: <span id="score">0</span></span>
     <span class="pill">🎯 Ronda: <span id="round">1</span> / <span id="total-rounds">8</span></span>
     <span class="pill timer" id="timer-pill" style="display:none;">⏱️ <span id="timer-value">10</span>s</span>
   </div>
@@ -24,91 +24,104 @@
     <div class="progress-fill timer-fill" id="timer-fill"></div>
   </div>
  
-  <!-- ===== Pantalla de selección de nivel ===== -->
   <div class="level-select" id="level-select">
  
     <div class="level-card-select tag-1" data-level="1" tabindex="0" role="button">
       <div class="emoji">🙂</div>
-      <h3>Nivel 1 · Caritas</h3>
-      <p>Mira la cara y adivina qué emoción siente</p>
-      <span class="tag">CLÁSICO</span>
+      <h3>Nivell 1 · Caretes</h3>
+      <p>Mira la cara i endevina quina emoció sent</p>
+      <span class="tag">CLÀSSIC</span>
     </div>
  
     <div class="level-card-select tag-3" data-level="3" tabindex="0" role="button">
       <div class="emoji">📖</div>
-      <h3>Nivel 3 · Situaciones</h3>
-      <p>Lee la historia y adivina qué sentiría esa persona</p>
-      <span class="tag">SITUACIONES</span>
+      <h3>Nivell 3 · Situacions</h3>
+      <p>Llegeix la història i endevina què sentiria aquesta persona</p>
+      <span class="tag">SITUACIONS</span>
     </div>
  
     <div class="level-card-select tag-8" data-level="8" tabindex="0" role="button">
       <div class="emoji">💬</div>
-      <h3>Nivel 8 · Causa y efecto</h3>
-      <p>Lee la causa y elige qué dirías en esa situación</p>
-      <span class="tag">CAUSA-EFECTO</span>
+      <h3>Nivell 8 · Causa i efecte</h3>
+      <p>Llegeix la causa i tria què diries en aquesta situació</p>
+      <span class="tag">CAUSA-EFECTE</span>
     </div>
  
   </div>
  
-  <!-- ===== Tarjeta del juego ===== -->
   <main class="game-card" id="game-card">
     <div class="back-row">
-      <button class="back-btn" id="back-btn">◀ Menú de niveles</button>
+      <button class="back-btn" id="back-btn">◀ Menú de nivells</button>
     </div>
  
-    <p class="prompt" id="prompt">¿Cómo se siente esta carita?</p>
+    <p class="prompt" id="prompt">Com es sent aquesta careta?</p>
  
     <div class="face" id="face" style="display:none;">🙂</div>
     <div class="situation" id="situation" style="display:none;"></div>
  
     <div class="options" id="options"></div>
     <p class="feedback" id="feedback"></p>
-    <button class="next-btn" id="next-btn">Siguiente ▶</button>
+    <button class="next-btn" id="next-btn">Següent ▶</button>
   </main>
  
-  <!-- ===== Pantalla final ===== -->
   <main class="game-card end-screen" id="end-screen">
     <div class="face" id="end-face">🏆</div>
-    <h2 id="end-title">¡Buen trabajo!</h2>
-    <p id="end-text">Has acertado X de 8</p>
+    <h2 id="end-title">Bon treball!</h2>
+    <p id="end-text">N'has encertat X de 8</p>
     <div class="end-buttons">
-      <button class="restart-btn" id="restart-btn">Jugar otra vez</button>
-      <button class="menu-btn" id="menu-btn">Menú de niveles</button>
+      <button class="restart-btn" id="restart-btn">Jugar un altra vegada</button>
+      <button class="menu-btn" id="menu-btn">Menú de nivells</button>
     </div>
   </main>
  
 <script>
  
-  // ===== Banco de datos =====
+  // ===== Banc de dades =====
  
   // Nivel 1: emoji + nombre de la emoción
   const emotions = [
-    { face: "😊", name: "Felicidad" },
-    { face: "😢", name: "Tristeza" },
-    { face: "😠", name: "Enfado" },
-    { face: "😨", name: "Miedo" },
+    { face: "😊", name: "Felicitat" },
+    { face: "😢", name: "Tristesa" },
+    { face: "😠", name: "Enuig" },
+    { face: "😨", name: "Por" },
     { face: "😲", name: "Sorpresa" },
-    { face: "🤢", name: "Asco" },
-    { face: "😴", name: "Cansancio" },
+    { face: "🤢", name: "Fàstic" },
+    { face: "😴", name: "Cansament" },
     { face: "😍", name: "Amor" },
-    { face: "😳", name: "Vergüenza" },
-    { face: "😎", name: "Confianza" }
+    { face: "😳", name: "Vergonya" },
+    { face: "😎", name: "Confiança" },
+    { face: "😤", name: "Frustració" },
+    { face: "😇", name: "Pau" },
+    { face: "😡", name: "Ira" },
+    { face: "😞", name: "Decepció" },
+    { face: "😌", name: "Alleujament" },
+    { face: "😐", name: "Indiferència" },
+    { face: "😕", name: "Confusió" },
+    { face: "😬", name: "Ansietat" },
+    { face: "😏", name: "Satisfacció" },
+    { face: "😔", name: "Melancolia" },
+    { face: "😪", name: "Somnolència" },
+    { face: "😖", name: "Desesperació" },
+    { face: "😝", name: "Diversió" },
+    { face: "😚", name: "Afecte" },
+    { face: "😥", name: "Preocupació" }
+
   ];
  
   // Nivel 3: situaciones + emoción correcta
   const situations = [
-    { text: "Se te ha caído el helado al suelo justo después de comprarlo.", name: "Tristeza" },
-    { text: "Tu mejor amigo te ha organizado una fiesta sorpresa de cumpleaños.", name: "Sorpresa" },
-    { text: "Alguien se ha colado delante de ti en la fila sin pedir permiso.", name: "Enfado" },
-    { text: "Vas a hablar en público por primera vez ante mucha gente.", name: "Miedo" },
-    { text: "Has aprobado un examen muy difícil para el que estudiaste mucho.", name: "Felicidad" },
-    { text: "Has encontrado comida pasada de fecha en la nevera.", name: "Asco" },
-    { text: "Te has equivocado de nombre al saludar a alguien delante de todos.", name: "Vergüenza" },
-    { text: "Llevas despierto muchas horas y los ojos se te cierran solos.", name: "Cansancio" },
-    { text: "Tu equipo de fútbol favorito ha ganado la final en el último minuto.", name: "Felicidad" },
-    { text: "Ves una araña enorme caminando por tu habitación.", name: "Miedo" },
-    { text: "Tu mascota se ha perdido y no sabes dónde está.", name: "Tristeza" },
-    { text: "Has terminado tu presentación y crees que ha salido genial.", name: "Confianza" }
+    { text: "Se t'ha caigut el gelat a terra just després de comprar-lo.", name: "Tristesa" },
+    { text: "El teu millor amic t'ha organitzat una festa sorpresa d'aniversari.", name: "Sorpresa" },
+    { text: "Algú s'ha colat davant teu a la cua sense demanar permís.", name: "Enfada" },
+    { text: "Vas a parlar en públic per primera vegada davant de molta gent.", name: "Por" },
+    { text: "Has aprovat un examen molt difícil per al qual vas estudiar molt.", name: "Felicitat" },
+    { text: "Has trobat menjar caducat a la nevera.", name: "Fàstic" },
+    { text: "T'has equivocat de nom en saludar algú davant de tothom.", name: "Vergonya" },
+    { text: "Portes moltes hores despert i els ulls se t'enclouen sols.", name: "Cansament" },
+    { text: "El teu equip de futbol preferit ha guanyat la final a l'últim minut.", name: "Felicitat" },
+    { text: "Veus una aranya enorme caminant per la teva habitació.", name: "Por" },
+    { text: "La teva mascota s'ha perdut i no saps on és.", name: "Tristesa" },
+    { text: "Has acabat la teva presentació i creus que ha sortit genial.", name: "Confiança" }
   ];
  
   const TOTAL_ROUNDS = 8;
@@ -117,83 +130,83 @@
   // Nivel 8: causa + emoción correcta + frases de respuesta (1 correcta + distractores)
   const causeEffect = [
     {
-      cause: "Tu amigo no ha venido a tu cumpleaños sin avisar.",
-      emotion: "Tristeza",
+      cause: "El teu amic no ha vingut al teu aniversari sense avisar.",
+      emotion: "Tristesa",
       responses: [
-        { text: "Me ha sentado mal que no vinieras ni avisaras.", correct: true },
-        { text: "¡Qué bien que no vinieras!", correct: false },
-        { text: "Me da igual, no me importa nada.", correct: false },
-        { text: "¡Qué sorpresa más bonita!", correct: false }
+        { text: "M'ha sabut greu que no vinguessis ni avisessis.", correct: true },
+        { text: "Que bé que no vinguessis!", correct: false },
+        { text: "Tant me fa, no m'importa gens.", correct: false },
+        { text: "Quina sorpresa més maca!", correct: false }
       ]
     },
     {
-      cause: "Alguien se ha colado delante de ti en la fila sin pedir permiso.",
-      emotion: "Enfado",
+      cause: "Algú s'ha colat davant teu a la cua sense demanar permís.",
+      emotion: "Enfada",
       responses: [
-        { text: "Perdona, había una fila, ¿puedes ponerte detrás?", correct: true },
-        { text: "No pasa nada, tranquilo, ponte donde quieras.", correct: false },
-        { text: "Qué alegría verte por aquí.", correct: false },
-        { text: "Lo siento mucho, ha sido culpa mía.", correct: false }
+        { text: "Perdona, hi havia una cua, et pots posar darrere?", correct: true },
+        { text: "No passa res, tranquil, posa't on vulguis.", correct: false },
+        { text: "Quina alegria veure't per aquí.", correct: false },
+        { text: "Em sap molt greu, ha estat culpa meva.", correct: false }
       ]
     },
     {
-      cause: "Vas a hablar en público por primera vez ante mucha gente.",
-      emotion: "Miedo",
+      cause: "Vas a parlar en públic per primera vegada davant de molta gent.",
+      emotion: "Por",
       responses: [
-        { text: "Estoy un poco nervioso, pero he practicado mucho.", correct: true },
-        { text: "Esto me aburre muchísimo.", correct: false },
-        { text: "No siento absolutamente nada.", correct: false },
-        { text: "Qué asco me da esto.", correct: false }
+        { text: "Estic un poc nerviós, però he practicat molt.", correct: true },
+        { text: "Això m'avorreix moltíssim.", correct: false },
+        { text: "No sento absolutament res.", correct: false },
+        { text: "Quin fàstic em fa això.", correct: false }
       ]
     },
     {
-      cause: "Has aprobado un examen muy difícil para el que estudiaste mucho.",
-      emotion: "Felicidad",
+      cause: "Has aprovat un examen molt difícil per al qual vas estudiar molt.",
+      emotion: "Felicitat",
       responses: [
-        { text: "¡Qué alegría, todo el esfuerzo mereció la pena!", correct: true },
-        { text: "Qué pena, no esperaba esto.", correct: false },
-        { text: "Estoy furioso con el resultado.", correct: false },
-        { text: "Me da mucho miedo este resultado.", correct: false }
+        { text: "Quina alegria, tot l'esforç ha valgut la pena!", correct: true },
+        { text: "Quina pena, no m'ho esperava.", correct: false },
+        { text: "Estic furiós amb el resultat.", correct: false },
+        { text: "Em fa molta por aquest resultat.", correct: false }
       ]
     },
     {
-      cause: "Has encontrado comida pasada de fecha en la nevera.",
-      emotion: "Asco",
+      cause: "Has trobat menjar caducat a la nevera.",
+      emotion: "Fàstic",
       responses: [
-        { text: "Puaj, esto huele fatal, hay que tirarlo.", correct: true },
-        { text: "Mmm, qué rico, voy a comerlo.", correct: false },
-        { text: "Qué buena noticia, gracias.", correct: false },
-        { text: "Estoy muy orgulloso de esto.", correct: false }
+        { text: "Uf, això fa mala olor, s'ha de llençar.", correct: true },
+        { text: "Mmm, que bo, m'ho menjaré.", correct: false },
+        { text: "Quina bona notícia, gràcies.", correct: false },
+        { text: "Estic molt orgullós d'això.", correct: false }
       ]
     },
     {
-      cause: "Te has equivocado de nombre al saludar a alguien delante de todos.",
-      emotion: "Vergüenza",
+      cause: "T'has equivocat de nom en saludar algú davant de tothom.",
+      emotion: "Vergonya",
       responses: [
-        { text: "Uy, perdona, me he confundido de nombre.", correct: true },
-        { text: "¡Lo hice a propósito, qué gracia!", correct: false },
-        { text: "Estoy muy enfadado contigo.", correct: false },
-        { text: "Qué cansado estoy hoy.", correct: false }
+        { text: "Ui, perdona, m'he confós de nom.", correct: true },
+        { text: "Ho he fet a dretcient, quina gràcia!", correct: false },
+        { text: "Estic molt enfadat amb tu.", correct: false },
+        { text: "Que cansat estic avui.", correct: false }
       ]
     },
     {
-      cause: "Tu mascota se ha perdido y no sabes dónde está.",
-      emotion: "Tristeza",
+      cause: "La teva mascota s'ha perdut i no saps on és.",
+      emotion: "Tristesa",
       responses: [
-        { text: "Estoy muy preocupado, espero encontrarla pronto.", correct: true },
-        { text: "No me importa, seguro que está bien.", correct: false },
-        { text: "Qué emocionante, una aventura nueva.", correct: false },
-        { text: "Me da igual, tengo otras mascotas.", correct: false }
+        { text: "Estic molt preocupat, espero trobar-la aviat.", correct: true },
+        { text: "No m'importa, segur que està bé.", correct: false },
+        { text: "Que emocionant, una aventura nova.", correct: false },
+        { text: "Tant me fa, tinc altres mascotes.", correct: false }
       ]
     },
     {
-      cause: "Tu equipo favorito ha ganado la final en el último minuto.",
-      emotion: "Felicidad",
+      cause: "El teu equip preferit ha guanyat la final a l'últim minut.",
+      emotion: "Felicitat",
       responses: [
-        { text: "¡Increíble! ¡Qué partido tan emocionante!", correct: true },
-        { text: "Qué aburrido ha sido todo esto.", correct: false },
-        { text: "Me ha dado mucho asco el resultado.", correct: false },
-        { text: "Estoy muy triste por haber ganado.", correct: false }
+        { text: "Increïble! Quin partit tan emocionant!", correct: true },
+        { text: "Quin avorriment ha estat tot això.", correct: false },
+        { text: "M'ha fet molt de fàstic el resultat.", correct: false },
+        { text: "Estic molt trist per haver guanyat.", correct: false }
       ]
     }
   ];
@@ -256,7 +269,7 @@
     progressTrack.style.display = "none";
     timerTrack.style.display = "none";
     timerPill.style.display = "none";
-    document.getElementById("header-subtitle").textContent = "Elige un nivel para empezar a aprender sobre las emociones";
+    document.getElementById("header-subtitle").textContent = "Tria un nivell per començar a aprendre sobre les emocions";
   }
  
   function startGame(level){
@@ -271,8 +284,8 @@
     progressTrack.style.display = "block";
  
     if(level === 1){
-      document.getElementById("header-subtitle").textContent = "Nivel 1 · Mira la carita y adivina qué emoción siente";
-      promptEl.textContent = "¿Cómo se siente esta carita?";
+      document.getElementById("header-subtitle").textContent = "Nivell 1 · Mira la careta i endevina quina emoció sent";
+      promptEl.textContent = "Com es sent aquesta careta?";
       faceEl.style.display = "block";
       situationEl.style.display = "none";
       timerTrack.style.display = "none";
@@ -281,8 +294,8 @@
     }
  
     if(level === 3){
-      document.getElementById("header-subtitle").textContent = "Nivel 3 · Lee la situación y adivina qué emoción sentiría";
-      promptEl.textContent = "¿Qué emoción sentirías en esta situación?";
+      document.getElementById("header-subtitle").textContent = "Nivell 3 · Llegeix la situació i endevina quina emoció sentiria";
+      promptEl.textContent = "Quina emoció sentiries en aquesta situació?";
       faceEl.style.display = "none";
       situationEl.style.display = "block";
       timerTrack.style.display = "none";
@@ -291,8 +304,8 @@
     }
  
     if(level === 8){
-      document.getElementById("header-subtitle").textContent = "Nivel 8 · Lee la causa: elige la emoción y qué dirías";
-      promptEl.textContent = "¿Qué emoción sentirías en esta situación?";
+      document.getElementById("header-subtitle").textContent = "Nivell 8 · Llegeix la causa: tria l'emoció i què diries";
+      promptEl.textContent = "Quina emoció sentiries en aquesta situació?";
       faceEl.style.display = "none";
       situationEl.style.display = "block";
       timerTrack.style.display = "none";
@@ -344,7 +357,7 @@
  
     if(currentLevel === 8){
       currentAnswer = current.emotion;
-      promptEl.textContent = "¿Qué dirías en esta situación?";
+      promptEl.textContent = "Què diries en aquesta situació?";
       situationEl.textContent = current.cause;
       situationEl.style.animation = "none";
       requestAnimationFrame(() => { situationEl.style.animation = "pop 0.35s ease"; });
@@ -397,7 +410,7 @@
  
     if(isCorrect){
       button.classList.add("correct");
-      feedbackEl.textContent = "¡Correcto! 🎉 Es " + currentAnswer.toLowerCase() + ".";
+      feedbackEl.textContent = "Correcte! 🎉 És " + currentAnswer.toLowerCase() + ".";
       feedbackEl.classList.add("ok");
       score++;
       scoreEl.textContent = score;
@@ -406,7 +419,7 @@
       allButtons.forEach(b => {
         if(b.textContent === currentAnswer) b.classList.add("correct");
       });
-      feedbackEl.textContent = "Casi... la respuesta correcta era " + currentAnswer.toLowerCase() + ".";
+      feedbackEl.textContent = "Gairebé... la resposta correcta era " + currentAnswer.toLowerCase() + ".";
       feedbackEl.classList.add("ko");
     }
  
@@ -421,7 +434,7 @@
  
     if(isCorrect){
       button.classList.add("correct");
-      feedbackEl.textContent = "¡Perfecto! 🎉 Esa es una buena forma de decirlo.";
+      feedbackEl.textContent = "Perfecte! 🎉 Aquesta és una bona manera de dir-ho.";
       feedbackEl.classList.add("ok");
       score++;
       scoreEl.textContent = score;
@@ -431,7 +444,7 @@
         const respMatch = current.responses.find(r => r.text === b.textContent);
         if(respMatch && respMatch.correct) b.classList.add("correct");
       });
-      feedbackEl.textContent = "Esa frase no encaja con la situación (sentirías " + current.emotion.toLowerCase() + ").";
+      feedbackEl.textContent = "Aquesta frase no encaixa amb la situació (sentiries " + current.emotion.toLowerCase() + ").";
       feedbackEl.classList.add("ko");
     }
  
@@ -448,19 +461,19 @@
  
     let msg, face;
     if(score === TOTAL_ROUNDS){
-      msg = "¡Perfecto! Eres un experto en emociones.";
+      msg = "Perfecte! Ets un expert en emocions.";
       face = "🏆";
     } else if(score >= TOTAL_ROUNDS * 0.6){
-      msg = "¡Muy bien! Vas reconociendo las emociones cada vez mejor.";
+      msg = "Molt bé! Vas reconeixent les emocions cada vegada millor.";
       face = "🌟";
     } else {
-      msg = "¡Sigue practicando! Cada emoción tiene su propia historia.";
+      msg = "Continua practicant! Cada emoció té la seva pròpia història.";
       face = "💪";
     }
  
     endFace.textContent = face;
     endTitle.textContent = msg;
-    endText.textContent = `Has acertado ${score} de ${TOTAL_ROUNDS}`;
+    endText.textContent = `Has encertat ${score} de ${TOTAL_ROUNDS}`;
   }
  
   // ===== Eventos =====
