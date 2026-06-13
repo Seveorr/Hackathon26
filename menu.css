@@ -40,7 +40,11 @@ a{ color: inherit; }
   color: var(--gold);
   letter-spacing: 2px;
 }
- 
+
+.contenedor {
+  text-align: center;
+}
+
 .stats{
   display:flex;
   gap: 18px;
