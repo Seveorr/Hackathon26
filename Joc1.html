@@ -72,12 +72,11 @@
 
     <script>
         let score = 0;
-        let currentSection = 1;       // Comencem a la Secció 1
-        let questionInSectionIdx = 1; // Pregunta actual dins de la secció (de la 1 a la 10)
+        let currentSection = 1;       
+        let questionInSectionIdx = 1; 
         const maxQuestionsPerSection = 10; 
         let correctAnswersOrder = []; 
 
-        // Base de dades de frases complexes i coherents per a la Secció 2
         const frasesComplexes = [
             { text: "El nen menja una poma vermella", ordre: ["👦", "🍽️", "🍎", "🔴"] },
             { text: "La nena llegeix un llibre gran", ordre: ["👧", "📖", "📚", "🏢"] },
@@ -119,7 +118,6 @@
         function redirectToMenu() { window.location.href = "menu.html"; }
 
         function updateProgressCircle(isCorrect) {
-            // El cercle es busca basant-se en l'índex de la pregunta actual (1 al 10)
             const circle = document.getElementById(`c${questionInSectionIdx}`);
             if (circle) {
                 if (isCorrect) {
@@ -227,13 +225,11 @@
         }
 
         function next() {
-            // Control del salt de seccions: si passem de la pregunta 10, saltem de bloc
             if (questionInSectionIdx > maxQuestionsPerSection) {
                 questionInSectionIdx = 1;
                 currentSection++;
                 resetProgressBar();
 
-                // Si s'han completat les 3 seccions de 10 preguntes
                 if (currentSection > 3) {
                     question.textContent = "🎉 Enhorabona! Has completat totes les seccions.";
                     targetZone.innerHTML = `<div class="target-label">Partida Finalitzada</div>`;
@@ -252,7 +248,6 @@
             actionBtn.style.display = "none";
             updateHeader();
 
-            // --- SECCIÓ 1: RELACIONAR ---
             if (currentSection === 1) {
                 const correct = data[Math.floor(Math.random() * data.length)];
                 const isWordToPic = Math.random() < 0.5;
@@ -285,9 +280,7 @@
                     });
                 }
             }
-            // --- SECCIÓ 2: FRASES COMPLEXES ---
             else if (currentSection === 2) {
-                // Triem una frase aleatòria, utilitzant l'índex per no repetir si és possible
                 const fraseSeleccionada = frasesComplexes[(questionInSectionIdx - 1) % frasesComplexes.length];
                 
                 question.textContent = `Ordena els pictogrames per traduir la frase:`;
@@ -311,17 +304,15 @@
                     options.appendChild(div);
                 });
             }
-            // --- SECCIÓ 3: SITUACIONS ---
             else if (currentSection === 3) {
                 const situacions = [
                     { q: "Està plovent molt fort a fora 🌧️, què necessites per no banyar-te?", correct: "🌂", opts: ["🪑", "🚲", "🍉"] },
                     { q: "Tens molta gana i vols esmorzar sa, què pots menjar? 🥣", correct: "🍎", opts: ["🔑", "🚗", "💻"] },
                     { q: "Fa molta calor i vols anar ràpid a la platja 🌊, quin transport agafes?", correct: "🚗", opts: ["🛏️", "🧸", "📚"] },
                     { q: "S'ha fet de nit i estàs molt cansat, on vas directament? 🌙", correct: "🛏️", opts: ["🍕", "🚀", "🧼"] },
-                    { q: "Vols fer un dibuix molt bonic en un llibre, què fas servir?", correct: "🎨", opts: ["🐱", "🚂", "🍞"] }
+                    { q: "Vols fer un dibuix molt bonic en un llibre, què haces servir?", correct: "🎨", opts: ["🐱", "🚂", "🍞"] }
                 ];
 
-                // Agafem una situació fent servir l'índex per repartir-les
                 const sit = situacions[(questionInSectionIdx - 1) % situacions.length];
                 question.textContent = `${sit.q}`;
                 targetZone.innerHTML = `<div class="target-label">?</div>`;
@@ -369,7 +360,6 @@
             }
             
             updateProgressCircle(ok); 
-            // Incrementem el comptador de la pregunta interna de la secció
             questionInSectionIdx++;
             updateHeader();
             setTimeout(next, 1200);

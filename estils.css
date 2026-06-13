@@ -1,3 +1,4 @@
+/* --- ESTILS GENERALS COMPARTITS --- */
 html, body {
     height: 100%;
     margin: 0;
@@ -57,7 +58,11 @@ body {
     box-sizing: border-box;
 }
 
-/* BARRA LATERAL */
+h1 { font-size: 24px; margin: 5px 0; }
+h2 { font-size: 18px; margin: 10px 0; color: #555; }
+.prompt { font-size: 18px; margin: 10px 0; color: #555; }
+
+/* --- BARRA LATERAL (IDÈNTICA PER AMBDÓS) --- */
 .sidebar {
     width: 100px;
     background: white;
@@ -131,7 +136,7 @@ body {
     color: white;
 }
 
-/* MARCADOR */
+/* --- MARCADOR TARONJA --- */
 .score-badge {
     display: inline-flex;
     align-items: center;
@@ -145,10 +150,7 @@ body {
     margin-bottom: 10px;
 }
 
-h1 { font-size: 24px; margin: 5px 0; }
-#question { font-size: 18px; margin: 10px 0; color: #555; }
-
-/* ÀREA DE JOC */
+/* --- ÀREA DE CONTINGUT DINÀMIC --- */
 .game-area {
     display: flex;
     flex-direction: column;
@@ -157,9 +159,10 @@ h1 { font-size: 24px; margin: 5px 0; }
     justify-content: center;
     align-items: center;
     width: 100%;
+    height: 100%; /* Força l'alineació vertical a l'espai central */
 }
 
-/* FRASE DE PISTA (ESTIL DUOLINGO) COL·LOCADA A DALT */
+/* --- DISSENY ESPECÍFIC DEL JOC 1 (ARROSSEGAR / DUOLINGO) --- */
 .duo-sentence-hint {
     font-size: 20px;
     font-weight: bold;
@@ -171,7 +174,6 @@ h1 { font-size: 24px; margin: 5px 0; }
     margin-bottom: 5px;
 }
 
-/* ZONA BLANCA DE DESTÍ: Força alineació d'esquerra a dreta contínua */
 .target-zone {
     width: 85%;
     min-height: 90px;
@@ -179,20 +181,18 @@ h1 { font-size: 24px; margin: 5px 0; }
     background-color: #f9fbfd;
     border-radius: 16px;
     display: flex;
-    flex-direction: row;        /* Acumulació horizontal d'esquerra a dreta */
-    justify-content: center;    /* Centra el grup de peces horitzontalment */
-    align-items: center;        /* Centra verticalment les peces a la fila */
-    flex-wrap: wrap;            /* En cas de frases mega llargues, salta de línia netament */
+    flex-direction: row;        
+    justify-content: center;    
+    align-items: center;        
+    flex-wrap: wrap;            
     gap: 12px;
     padding: 12px;
     box-sizing: border-box;
-    transition: background-color 0.2s;
 }
 
 .target-label { font-size: 22px; font-weight: bold; color: #90CAF9; }
 .target-label-pic { font-size: 45px; }
 
-/* PECE ARROSSEGABLE */
 .drag-item {
     cursor: grab;
     padding: 10px 20px;
@@ -204,7 +204,6 @@ h1 { font-size: 24px; margin: 5px 0; }
     display: inline-block;
 }
 .drag-item:active { cursor: grabbing; }
-
 .item-pic { font-size: 35px; padding: 5px 15px; }
 .item-word { font-size: 18px; color: #333; }
 
@@ -219,9 +218,62 @@ h1 { font-size: 24px; margin: 5px 0; }
     width: 100%;
 }
 
+/* --- DISSENY ESPECÍFIC DEL JOC 2 (EMOCIONS / GRID BOTONS) --- */
+.face {
+    font-size: 5rem;
+    margin: 10px 0;
+    line-height: 1;
+    display: inline-block;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 85%;
+    max-width: 400px;
+}
+
+.option-btn {
+    background-color: #ffffff;
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    padding: 14px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.option-btn:hover:not(.disabled) {
+    background-color: #f9fbfd;
+    border-color: #2196F3;
+    color: #2196F3;
+    transform: translateY(-2px);
+}
+
+.option-btn.disabled {
+    pointer-events: none;
+}
+
+.option-btn.correct {
+    background-color: #c6f6d5 !important;
+    border-color: #48bb78 !important;
+    color: #22543d !important;
+}
+
+.option-btn.wrong {
+    background-color: #fed7d7 !important;
+    border-color: #f56565 !important;
+    color: #742a2a !important;
+}
+
+/* --- COMMUTADORS DE PANTALLES I NOTIFICACIONS --- */
+.feedback { min-height: 24px; font-weight: bold; font-size: 18px; margin: 5px 0; }
 #msg { min-height: 24px; font-weight: bold; font-size: 18px; margin: 5px 0; }
 
-/* INFERIOR */
+/* --- SECCIÓ INFERIOR DE BOTONS --- */
 .exit-container {
     display: flex;
     flex-direction: column;
@@ -258,7 +310,7 @@ h1 { font-size: 24px; margin: 5px 0; }
 }
 .btn-exit:hover { background-color: #d4d4d4; }
 
-/* MODAL */
+/* --- FINESTRES MODALS D'ALERTA --- */
 .modal-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -278,3 +330,10 @@ h1 { font-size: 24px; margin: 5px 0; }
 .btn-modal { padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 8px; cursor: pointer; border: none; }
 .btn-modal.confirm { background-color: #F44336; color: white; }
 .btn-modal.cancel { background-color: #e0e0e0; color: #333; }
+
+/* --- ANIMACIONS --- */
+@keyframes pop {
+    0% { transform: scale(0.6); opacity: 0; }
+    80% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+}
