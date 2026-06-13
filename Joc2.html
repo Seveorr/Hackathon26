@@ -6,12 +6,12 @@
     </head>
     <body> 
     <header>
-        <h1>Emo<span>land</span> 🎈</h1>
-        <p style="text-align: center;">Mira la carita y adivina qué emoción siente</p>
+        <h1 style="text-align: center;">Joc2: Emocions</h1>
+        <p style="text-align: center;">Mira la careta i adivina quina emocio sent</p>
     </header>
     
     <div class="scoreboard">
-        <span class="pill">⭐ Aciertos: <span id="score">0</span></span>
+        <span class="pill">⭐ Encerts: <span id="score">0</span></span>
         <span class="pill">🎯 Ronda: <span id="round">1</span> / <span id="total-rounds">8</span></span>
     </div>
     
@@ -20,18 +20,18 @@
     </div>
     
     <main class="game-card" id="game-card">
-        <p class="prompt">¿Cómo se siente esta carita?</p>
+        <p class="prompt" style="text-align: center;">Com es sent aquesta careta?</p>
         <div class="face" id="face">🙂</div>
         <div class="options" id="options"></div>
         <p class="feedback" id="feedback"></p>
-        <button class="next-btn" id="next-btn">Siguiente ▶</button>
+        <button class="next-btn" id="next-btn" style="text-align: center;">Següent ▶</button>
     </main>
     
     <main class="game-card end-screen" id="end-screen">
         <div class="face" id="end-face">🏆</div>
-        <h2 id="end-title">¡Buen trabajo!</h2>
-        <p id="end-text">Has acertado X de 8</p>
-        <button class="restart-btn" id="restart-btn">Jugar otra vez</button>
+        <h2 id="end-title">Bona feina!</h2>
+        <p id="end-text">Has encertat X de 8</p>
+        <button class="restart-btn" id="restart-btn">Jugar una altra vegada</button>
     </main>
     
     <script>
@@ -46,7 +46,17 @@
         { face: "😴", name: "Cansancio" },
         { face: "😍", name: "Amor" },
         { face: "😳", name: "Vergüenza" },
-        { face: "😎", name: "Confianza" }
+        { face: "😎", name: "Confianza" },
+        { face: "😐", name: "Indiferencia" },
+        { face: "😇", name: "Inocencia" },
+        { face: "🤔", name: "Curiosidad" },
+        { face: "😤", name: "Frustración" },
+        { face: "😏", name: "Satisfacción" },
+        { face: "😞", name: "Decepción" },
+        { face: "😡", name: "Ira" },
+        { face: "😌", name: "Alivio" },
+        { face: "😬", name: "Nerviosismo" },
+        { face: "🤗", name: "Afecto" }
     ];
     
     const TOTAL_ROUNDS = 8;
@@ -135,7 +145,7 @@
     
         if(chosen === currentAnswer){
         button.classList.add("correct");
-        feedbackEl.textContent = "¡Correcto! 🎉 Es " + currentAnswer.toLowerCase() + ".";
+        feedbackEl.textContent = "Correcte! 🎉 Es " + currentAnswer.toLowerCase() + ".";
         feedbackEl.classList.add("ok");
         score++;
         scoreEl.textContent = score;
@@ -144,7 +154,7 @@
         allButtons.forEach(b => {
             if(b.textContent === currentAnswer) b.classList.add("correct");
         });
-        feedbackEl.textContent = "Casi... la respuesta correcta era " + currentAnswer.toLowerCase() + ".";
+        feedbackEl.textContent = "Casi... la resposta correcta era " + currentAnswer.toLowerCase() + ".";
         feedbackEl.classList.add("ko");
         }
     
@@ -159,19 +169,19 @@
     
         let msg, face;
         if(score === TOTAL_ROUNDS){
-        msg = "¡Perfecto! Eres un experto en emociones.";
+        msg = "Perfecte! Ets un expert en emocions.";
         face = "🏆";
         } else if(score >= TOTAL_ROUNDS * 0.6){
-        msg = "¡Muy bien! Vas reconociendo las emociones cada vez mejor.";
+        msg = "Molt bé! Vas reconeixent les emocions cada vegada millor.";
         face = "🌟";
         } else {
-        msg = "¡Sigue practicando! Cada emoción tiene su propia carita.";
+        msg = "Continua practicant! Cada emoció té la seva careta.";
         face = "💪";
         }
     
         endFace.textContent = face;
         endTitle.textContent = msg;
-        endText.textContent = `Has acertado ${score} de ${TOTAL_ROUNDS}`;
+        endText.textContent = `Has encertat ${score} de ${TOTAL_ROUNDS}`;
     }
     
     nextBtn.addEventListener("click", nextRound);
