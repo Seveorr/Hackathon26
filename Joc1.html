@@ -1,11 +1,391 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Joc 1: Construcció de frases</title>
-        <link rel="stylesheet" href="menu.css">
-    </head>
-    <body>
-        <h1>Joc 1: Construcció de frases.</h1>
-        <p>Aquest és el primer joc de LanguageQuest.</p>
-    </body>
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comunicació amb Pictogrames</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f5f7fa;
+    margin:0;
+    padding:20px;
+    text-align:center;
+}
+
+h1{
+    color:#2c3e50;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+}
+
+.mode-selector{
+    margin-bottom:20px;
+}
+
+button{
+    cursor:pointer;
+}
+
+.mode-btn{
+    padding:10px 20px;
+    margin:5px;
+    border:none;
+    border-radius:10px;
+    background:#3498db;
+    color:white;
+    font-size:16px;
+}
+
+.mode-btn:hover{
+    background:#2980b9;
+}
+
+.hidden{
+    display:none;
+}
+
+.pictograms{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:15px;
+    margin-top:20px;
+}
+
+.picto{
+    width:120px;
+    background:white;
+    border-radius:15px;
+    padding:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.2);
+    transition:0.2s;
+}
+
+.picto:hover{
+    transform:scale(1.05);
+}
+
+.picto button{
+    width:100%;
+    border:none;
+    background:none;
+    font-size:40px;
+}
+
+.picto span{
+    display:block;
+    margin-top:5px;
+    font-weight:bold;
+}
+
+.sentence-box{
+    min-height:60px;
+    background:white;
+    border-radius:12px;
+    padding:15px;
+    margin:20px auto;
+    max-width:700px;
+    font-size:24px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+}
+
+.controls{
+    margin-top:10px;
+}
+
+.control-btn{
+    padding:10px 20px;
+    border:none;
+    border-radius:10px;
+    margin:5px;
+    background:#27ae60;
+    color:white;
+    font-size:16px;
+}
+
+.control-btn.clear{
+    background:#e74c3c;
+}
+
+.challenge{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    margin:20px auto;
+    max-width:700px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
+}
+
+.result{
+    font-size:22px;
+    font-weight:bold;
+    margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🗣️ Joc de Comunicació amb Pictogrames</h1>
+
+<div class="mode-selector">
+    <button class="mode-btn" onclick="showMode('build')">
+        Construir Frases
+    </button>
+
+    <button class="mode-btn" onclick="showMode('guess')">
+        Frase → Pictogrames
+    </button>
+</div>
+
+<!-- MODE 1 -->
+<div id="buildMode">
+
+    <h2>Construeix una frase</h2>
+
+    <div class="sentence-box" id="sentence">
+        Selecciona pictogrames...
+    </div>
+
+    <div class="controls">
+        <button class="control-btn" onclick="speakSentence()">
+            🔊 Llegir
+        </button>
+
+        <button class="control-btn clear" onclick="clearSentence()">
+            🗑 Esborrar
+        </button>
+    </div>
+
+    <div class="pictograms" id="pictogramList"></div>
+
+</div>
+
+<!-- MODE 2 -->
+<div id="guessMode" class="hidden">
+
+    <h2>Selecciona els pictogrames correctes</h2>
+
+    <div class="challenge">
+        <h3 id="targetSentence"></h3>
+
+        <div class="pictograms" id="guessArea"></div>
+
+        <button class="control-btn" onclick="checkAnswer()">
+            Comprovar
+        </button>
+
+        <button class="control-btn" onclick="newChallenge()">
+            Nova Frase
+        </button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+</div>
+
+</div>
+
+<script>
+
+const pictograms = [
+    {emoji:"👦", word:"jo"},
+    {emoji:"🍎", word:"poma"},
+    {emoji:"🍞", word:"pa"},
+    {emoji:"🥛", word:"llet"},
+    {emoji:"🐶", word:"gos"},
+    {emoji:"🏃", word:"corro"},
+    {emoji:"🍽️", word:"menjo"},
+    {emoji:"💧", word:"bec"},
+    {emoji:"❤️", word:"m'agrada"},
+    {emoji:"🏠", word:"casa"}
+];
+
+let sentenceWords = [];
+
+function createPictograms(){
+
+    const container =
+        document.getElementById("pictogramList");
+
+    pictograms.forEach(p => {
+
+        const card = document.createElement("div");
+        card.className = "picto";
+
+        card.innerHTML = `
+            <button onclick="addWord('${p.word}')">
+                ${p.emoji}
+            </button>
+            <span>${p.word}</span>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+function addWord(word){
+    sentenceWords.push(word);
+    updateSentence();
+}
+
+function updateSentence(){
+
+    const box =
+        document.getElementById("sentence");
+
+    if(sentenceWords.length===0){
+        box.textContent =
+            "Selecciona pictogrames...";
+    }else{
+        box.textContent =
+            sentenceWords.join(" ");
+    }
+}
+
+function clearSentence(){
+    sentenceWords=[];
+    updateSentence();
+}
+
+function speakSentence(){
+
+    if(sentenceWords.length===0) return;
+
+    const utterance =
+        new SpeechSynthesisUtterance(
+            sentenceWords.join(" ")
+        );
+
+    utterance.lang = "ca-ES";
+    speechSynthesis.speak(utterance);
+}
+
+function showMode(mode){
+
+    document.getElementById("buildMode")
+        .classList.add("hidden");
+
+    document.getElementById("guessMode")
+        .classList.add("hidden");
+
+    if(mode==="build"){
+        document.getElementById("buildMode")
+            .classList.remove("hidden");
+    }
+
+    if(mode==="guess"){
+        document.getElementById("guessMode")
+            .classList.remove("hidden");
+    }
+}
+
+const challenges = [
+    ["jo","menjo","poma"],
+    ["jo","bec","llet"],
+    ["gos","corro"],
+    ["m'agrada","pa"],
+    ["jo","casa"]
+];
+
+let currentChallenge = [];
+let selectedGuess = [];
+
+function newChallenge(){
+
+    selectedGuess=[];
+
+    currentChallenge =
+        challenges[
+            Math.floor(Math.random() *
+            challenges.length)
+        ];
+
+    document.getElementById(
+        "targetSentence"
+    ).textContent =
+        currentChallenge.join(" ");
+
+    document.getElementById(
+        "result"
+    ).textContent = "";
+
+    renderGuessOptions();
+}
+
+function renderGuessOptions(){
+
+    const area =
+        document.getElementById("guessArea");
+
+    area.innerHTML="";
+
+    pictograms.forEach(p => {
+
+        const card =
+            document.createElement("div");
+
+        card.className="picto";
+
+        card.innerHTML = `
+            <button onclick="selectGuess('${p.word}')">
+                ${p.emoji}
+            </button>
+            <span>${p.word}</span>
+        `;
+
+        area.appendChild(card);
+    });
+}
+
+function selectGuess(word){
+
+    selectedGuess.push(word);
+
+    document.getElementById("result")
+        .textContent =
+        "Seleccionat: " +
+        selectedGuess.join(" ");
+}
+
+function checkAnswer(){
+
+    const correct =
+        currentChallenge.join(" ");
+
+    const answer =
+        selectedGuess.join(" ");
+
+    const result =
+        document.getElementById("result");
+
+    if(correct===answer){
+
+        result.innerHTML =
+            "✅ Correcte!";
+
+        result.style.color="green";
+
+    }else{
+
+        result.innerHTML =
+            "❌ Torna-ho a provar.";
+
+        result.style.color="red";
+    }
+}
+
+createPictograms();
+newChallenge();
+
+</script>
+
+</body>
 </html>
