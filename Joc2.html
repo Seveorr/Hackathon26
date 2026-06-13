@@ -6,17 +6,12 @@
     </head>
     <body> 
     <header>
-<<<<<<< HEAD
-        <h1 stylr>Joc2: Empcions</h1>
-        <p style="text-align: center;">Mira la carita y adivina qué emoción siente</p>
-=======
         <h1 style="text-align: center;">Joc2: Emocions</h1>
         <p style="text-align: center;">Mira la careta i adivina quina emocio sent</p>
->>>>>>> 7d9d602cfd2d09af0419b7a9e8cb0405b2cad30b
     </header>
     
     <div class="scoreboard">
-        <span class="pill">⭐ Encerts: <span id="score">0</span></span>
+        <span class="pill">⭐ Emcerts: <span id="score">0</span></span>
         <span class="pill">🎯 Ronda: <span id="round">1</span> / <span id="total-rounds">8</span></span>
     </div>
     
@@ -25,11 +20,11 @@
     </div>
     
     <main class="game-card" id="game-card">
-        <p class="prompt" style="text-align: center;">Com es sent aquesta careta?</p>
+        <p class="prompt">Com es sent aquesta?</p>
         <div class="face" id="face">🙂</div>
         <div class="options" id="options"></div>
         <p class="feedback" id="feedback"></p>
-        <button class="next-btn" id="next-btn" style="text-align: center;">Següent ▶</button>
+        <button class="next-btn" id="next-btn">Següent ▶</button>
     </main>
     
     <main class="game-card end-screen" id="end-screen">
@@ -42,26 +37,26 @@
     <script>
     // Banco de emociones: emoji + nombre correcto
     const emotions = [
-        { face: "😊", name: "Felicidad" },
-        { face: "😢", name: "Tristeza" },
-        { face: "😠", name: "Enfado" },
-        { face: "😨", name: "Miedo" },
+        { face: "😊", name: "Felicitat" },
+        { face: "😢", name: "Tristesa" },
+        { face: "😠", name: "Enuig" },
+        { face: "😨", name: "Por" },
         { face: "😲", name: "Sorpresa" },
-        { face: "🤢", name: "Asco" },
-        { face: "😴", name: "Cansancio" },
+        { face: "🤢", name: "Fastig" },
+        { face: "😴", name: "Cansanci" },
         { face: "😍", name: "Amor" },
-        { face: "😳", name: "Vergüenza" },
-        { face: "😎", name: "Confianza" },
-        { face: "😐", name: "Indiferencia" },
-        { face: "😇", name: "Inocencia" },
-        { face: "🤔", name: "Curiosidad" },
-        { face: "😤", name: "Frustración" },
-        { face: "😏", name: "Satisfacción" },
-        { face: "😞", name: "Decepción" },
-        { face: "😡", name: "Ira" },
-        { face: "😌", name: "Alivio" },
-        { face: "😬", name: "Nerviosismo" },
-        { face: "🤗", name: "Afecto" }
+        { face: "😳", name: "Vergonya" },
+        { face: "😎", name: "Confiansa" },
+        { face: "😐", name: "Indiferència" },
+        { face: "😇", name: "Puresa" },
+        { face: "🤔", name: "Confusió" },
+        { face: "😤", name: "Frustració" },
+        { face: "😜", name: "Diversió" },
+        { face: "😞", name: "Decepció" },
+        { face: "😡", name: "Furia" },
+        { face: "😰", name: "Ansietat" },
+        { face: "😌", name: "Alleujament" },
+        { face: "🤯", name: "Xoc" }
     ];
     
     const TOTAL_ROUNDS = 8;
@@ -180,13 +175,13 @@
         msg = "Molt bé! Vas reconeixent les emocions cada vegada millor.";
         face = "🌟";
         } else {
-        msg = "Continua practicant! Cada emoció té la seva careta.";
+        msg = "Segueix practicant! Cada emoció té la seva propia careta.";
         face = "💪";
         }
     
         endFace.textContent = face;
         endTitle.textContent = msg;
-        endText.textContent = `Has encertat ${score} de ${TOTAL_ROUNDS}`;
+        endText.textContent = `Has acertado ${score} de ${TOTAL_ROUNDS}`;
     }
     
     nextBtn.addEventListener("click", nextRound);
