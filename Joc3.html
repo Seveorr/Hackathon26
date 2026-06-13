@@ -83,7 +83,7 @@
         </div>
       </div>
  
-      <p class="hint">💡 Intenta llegir cada opció en veu alta abans de triar-la</p>
+      <p class="hint">💡 Intenta llegir cada opció en veu alta abans de triar-la, això et felicitarà entendre-la</p>
     </div>
   </main>
  
@@ -100,7 +100,7 @@
       tree: {
         start: {
           npc: "Bon dia! Què li poso?",
-          character: "CAMARERO", avatar: "🧑‍🍳",
+          character: "CAMBRER", avatar: "🧑‍🍳",
           options: [
             { text: "Bon dia, voldria un cafè amb llet, si us plau.", next: "size" },
             { text: "Hola... eh... cafè?", next: "informal" },
@@ -109,7 +109,7 @@
         },
         informal: {
           npc: "Clar, però recorda: quan demanes alguna cosa, sona millor dir 'si us plau'. Quin tipus de cafè vols?",
-          character: "CAMARERO", avatar: "🧑‍🍳",
+          character: "CAMBRER", avatar: "🧑‍🍳",
           options: [
             { text: "Perdó. Un cafè amb llet, si us plau.", next: "size" },
             { text: "Un normal està bé, gràcies.", next: "size" }
@@ -117,7 +117,7 @@
         },
         size: {
           npc: "Perfecte. El vol gran o petit?",
-          character: "CAMARERO", avatar: "🧑‍🍳",
+          character: "CAMBRER", avatar: "🧑‍🍳",
           options: [
             { text: "Gran, si us plau.", next: "pay" },
             { text: "Petit està bé.", next: "pay" }
@@ -125,7 +125,7 @@
         },
         pay: {
           npc: "Aquí té. Són 2 euros amb 50.",
-          character: "CAMARERO", avatar: "🧑‍🍳",
+          character: "CAMBRER", avatar: "🧑‍🍳",
           options: [
             { text: "Aquí té, moltes gràcies.", next: "end_success" },
             { text: "Puc pagar amb targeta?", next: "card" }
@@ -133,20 +133,20 @@
         },
         card: {
           npc: "Per descomptat! Aquí té el datàfon.",
-          character: "CAMARERO", avatar: "🧑‍🍳",
+          character: "CAMBRER", avatar: "🧑‍🍳",
           options: [
             { text: "Gràcies, que tingui un bon dia.", next: "end_success" }
           ]
         },
         leaving: {
           npc: "D'acord, que tingui un bon dia!",
-          character: "CAMARERO", avatar: "🧑‍🍳",
+          character: "CAMBRER", avatar: "🧑‍🍳",
           options: [],
           end: { emoji: "👋", title: "Conversa curta", text: "Has sortit sense demanar res. Torna-ho a provar i practica demanar un cafè!" }
         },
         end_success: {
           npc: "Aquí té el seu cafè! Que el gaudeixi.",
-          character: "CAMARERO", avatar: "🧑‍🍳",
+          character: "CAMBRER", avatar: "🧑‍🍳",
           options: [],
           end: { emoji: "☕", title: "Conversa completada!", text: "Has demanat el teu cafè amb èxit fent servir frases completes i educades. Molt bé!" }
         }
@@ -162,14 +162,17 @@
           character: "VEÍ", avatar: "🧑",
           options: [
             { text: "Hola, disculpa, saps on és la biblioteca?", next: "directions" },
-            { text: "Biblioteca! On?", next: "informal" }
+            { text: "Biblioteca! On?", next: "informal" },
+            { text: "No sé on és la biblioteca.", next: "informal" }
           ]
         },
         informal: {
           npc: "Jaja, t'entenc, però intenta preguntar d'una manera més completa: 'Saps on és...?' Què busques?",
           character: "VEÍ", avatar: "🧑",
           options: [
-            { text: "Perdona. Saps on és la biblioteca?", next: "directions" }
+            { text: "Perdona. Saps on és la biblioteca?", next: "directions" },
+            { text: "D'acord, perdò, em podries dir on és la biblioteca?", next: "directions"},
+            { text: "Biblioteca, siusplau", next: "informal"}
           ]
         },
         directions: {
@@ -180,6 +183,24 @@
             { text: "Està molt lluny d'aquí?", next: "distance" }
           ]
         },
+        informal: {
+            npc: "Buena ara esta millor, però pregunta de una forma més clara",
+            character: "VEÍ", avatar: "🧑",
+            options: [
+                { text: "Perdona, està molt lluny la biblioteca?", next: "distance" },
+                { text: "D'acord, perdó, em podries dir on és la biblioteca?", next: "directions"}
+        ]
+        }
+        
+        direction: {
+          npc: "Sí, segueix tot recte i gira a la dreta al segon carrer. Està al costat del parc.",
+          character: "VEÍ", avatar: "🧑",
+          options: [
+            { text: "Moltes gràcies, molt amable!", next: "confirm" },
+            { text: "Està molt lluny d'aquí?", next: "distance" }
+          ]
+        },
+
         distance: {
           npc: "No, són només cinc minuts caminant.",
           character: "VEÍ", avatar: "🧑",
