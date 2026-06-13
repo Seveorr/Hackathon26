@@ -33,7 +33,7 @@ a{ color: inherit; }
   flex-wrap: wrap;
   gap: 12px;
 }
- 
+
 .logo{
   font-family: var(--pixel);
   font-size: 1rem;
