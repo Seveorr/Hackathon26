@@ -5,6 +5,7 @@ html, body {
     overflow: hidden; 
     font-family: Arial, sans-serif;
     background-color: #f0f2f5;
+    user-select: none;
 }
 
 body {
@@ -56,7 +57,7 @@ body {
     box-sizing: border-box;
 }
 
-/* BARRA LATERAL ESQUERRA */
+/* BARRA LATERAL */
 .sidebar {
     width: 100px;
     background: white;
@@ -122,75 +123,140 @@ body {
     background-color: #4CAF50;
     border-color: #388E3C;
     color: white;
-    transform: scale(1.05);
 }
 
 .circle.incorrect {
     background-color: #F44336;
     border-color: #D32F2F;
     color: white;
-    transform: scale(1.05);
 }
 
-/* MARCADOR DE PUNTUACIÓ ESTILITZAT */
+/* MARCADOR */
 .score-badge {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
     background: linear-gradient(135deg, #FF9800, #F57C00);
     color: white;
-    padding: 8px 20px;
+    padding: 8px 24px;
     border-radius: 20px;
     font-size: 18px;
     font-weight: bold;
     box-shadow: 0 4px 8px rgba(245, 124, 0, 0.3);
-    margin: 5px 0 15px 0;
+    margin-bottom: 10px;
 }
 
 h1 { font-size: 24px; margin: 5px 0; }
-#question { font-size: 22px; margin: 15px 0; color: #333; }
+#question { font-size: 18px; margin: 10px 0; color: #555; }
+
+/* ÀREA DE JOC */
+.game-area {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* FRASE DE PISTA (ESTIL DUOLINGO) COL·LOCADA A DALT */
+.duo-sentence-hint {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1565C0;
+    background-color: #E3F2FD;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: 1px dashed #90CAF9;
+    margin-bottom: 5px;
+}
+
+/* ZONA BLANCA DE DESTÍ: Força alineació d'esquerra a dreta contínua */
+.target-zone {
+    width: 85%;
+    min-height: 90px;
+    border: 3px dashed #2196F3;
+    background-color: #f9fbfd;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: row;        /* Acumulació horizontal d'esquerra a dreta */
+    justify-content: center;    /* Centra el grup de peces horitzontalment */
+    align-items: center;        /* Centra verticalment les peces a la fila */
+    flex-wrap: wrap;            /* En cas de frases mega llargues, salta de línia netament */
+    gap: 12px;
+    padding: 12px;
+    box-sizing: border-box;
+    transition: background-color 0.2s;
+}
+
+.target-label { font-size: 22px; font-weight: bold; color: #90CAF9; }
+.target-label-pic { font-size: 45px; }
+
+/* PECE ARROSSEGABLE */
+.drag-item {
+    cursor: grab;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: 2px solid #ccc;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    font-weight: bold;
+    display: inline-block;
+}
+.drag-item:active { cursor: grabbing; }
+
+.item-pic { font-size: 35px; padding: 5px 15px; }
+.item-word { font-size: 18px; color: #333; }
 
 .options { 
     display: flex; 
-    gap: 12px; 
+    flex-direction: row;
     justify-content: center; 
     align-items: center;
-    flex-wrap: wrap; 
-    flex: 1; 
-    align-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    min-height: 80px;
+    width: 100%;
 }
 
-.btn { 
-    padding: 12px 24px; 
-    font-size: 22px; 
-    cursor: pointer; 
-    border-radius: 8px; 
-    border: 1px solid #ccc; 
-    background: #fff; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: transform 0.1s;
-}
-.btn:hover { background: #e9e9e9; transform: translateY(-2px); }
-.btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-#msg { min-height: 24px; margin-top: 5px; font-weight: bold; font-size: 16px; }
+#msg { min-height: 24px; font-weight: bold; font-size: 18px; margin: 5px 0; }
 
+/* INFERIOR */
 .exit-container {
-    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
     border-top: 1px solid #eee;
     padding-top: 10px;
     flex-shrink: 0;
 }
+
+.btn-action {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+.btn-action:hover { background-color: #43A047; }
+
 .btn-exit {
     background-color: #e0e0e0;
     color: #333;
     border: 1px solid #ccc;
-    padding: 8px 16px;
+    padding: 6px 14px;
     font-size: 13px;
     font-weight: bold;
     border-radius: 6px;
     cursor: pointer;
 }
-.btn-exit:hover { background-color: #d4d4d4; color: #000; }
+.btn-exit:hover { background-color: #d4d4d4; }
 
 /* MODAL */
 .modal-overlay {
