@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joc3: Practica Conversas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="layout">
+
+
+  <aside class="sidebar">
+    <h2>ESCENAS</h2>
+    <div class="scene-list" id="scene-list">
+      <button class="scene-btn active" data-scene="cafeteria">
+        <span class="icon">☕</span>
+        <span>La cafetería</span>
+        <span class="scene-status"></span>
+      </button>
+      <button class="scene-btn" data-scene="calle">
+        <span class="icon">🧭</span>
+        <span>Pedir direcciones</span>
+        <span class="scene-status"></span>
+      </button>
+      <button class="scene-btn" data-scene="tienda">
+        <span class="icon">👕</span>
+        <span>De compras</span>
+        <span class="scene-status"></span>
+      </button>
+      <button class="scene-btn" data-scene="presentacion">
+        <span class="icon">🙋</span>
+        <span>Presentarse</span>
+        <span class="scene-status"></span>
+      </button>
+    </div>
+    <p class="sidebar-footer">Elige una escena<br>para practicar</p>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main class="main">
+    <header>
+      <h1 id="page-title">💬 PRACTICA CONVERSACIÓN</h1>
+      <p>Elige lo que dirías en cada situación para avanzar el diálogo</p>
+    </header>
+
+    <div class="stage">
+      <p class="scene-label" id="scene-label">ESCENA · LA CAFETERÍA</p>
+
+      <!-- Personaje NPC -->
+      <div class="character">
+        <div class="avatar" id="avatar">🧑‍🍳</div>
+        <span class="character-name" id="character-name">CAMARERO</span>
+      </div>
+
+      <!-- Diálogo principal -->
+      <div class="dialogue-box">
+        <p class="dialogue-text" id="npc-text">¡Buenos días! ¿Qué le pongo?</p>
+      </div>
+
+      <!-- Opciones del jugador -->
+      <div id="game-area">
+        <p class="player-label">TÚ DICES:</p>
+        <div class="options" id="options"></div>
+      </div>
+
+      <!-- Pantalla final -->
+      <div class="end-box" id="end-box">
+        <div class="emoji" id="end-emoji">☕</div>
+        <h2 id="end-title">¡Conversación completada!</h2>
+        <p id="end-text">Has pedido tu café con éxito.</p>
+        <div class="end-buttons">
+          <button class="restart-btn" id="restart-btn">Repetir escena</button>
+          <button class="next-scene-btn" id="next-scene-btn">Siguiente escena ▶</button>
+        </div>
+      </div>
+
+      <p class="hint">💡 Intenta leer cada opción en voz alta antes de elegirla</p>
+    </div>
+  </main>
+
+</div>
+
+<script>
+
+  // ===== Definición de escenas y árboles de diálogo =====
+  const scenes = {
+
+    cafeteria: {
+      title: "ESCENA · LA CAFETERÍA",
+      icon: "☕",
+      tree: {
+        start: {
+          npc: "¡Buenos días! ¿Qué le pongo?",
+          character: "CAMARERO", avatar: "🧑‍🍳",
+          options: [
+            { text: "Buenos días, quiero un café con leche, por favor.", next: "size" },
+            { text: "Hola... eh... ¿café?", next: "informal" },
+            { text: "Nada, gracias, solo estoy mirando.", next: "leaving" }
+          ]
+        },
+        informal: {
+          npc: "Claro, pero recuerda: cuando pides algo, suena mejor decir 'por favor'. ¿Qué tipo de café quieres?",
+          character: "CAMARERO", avatar: "🧑‍🍳",
+          options: [
+            { text: "Perdón. Un café con leche, por favor.", next: "size" },
+            { text: "Uno normal está bien, gracias.", next: "size" }
+          ]
+        },
+        size: {
+          npc: "Perfecto. ¿Lo quiere grande o pequeño?",
+          character: "CAMARERO", avatar: "🧑‍🍳",
+          options: [
+            { text: "Grande, por favor.", next: "pay" },
+            { text: "Pequeño está bien.", next: "pay" }
+          ]
+        },
+        pay: {
+          npc: "Aquí tiene. Son 2 euros con 50.",
+          character: "CAMARERO", avatar: "🧑‍🍳",
+          options: [
+            { text: "Aquí tiene, muchas gracias.", next: "end_success" },
+            { text: "¿Puedo pagar con tarjeta?", next: "card" }
+          ]
+        },
+        card: {
+          npc: "¡Por supuesto! Aquí tiene el datáfono.",
+          character: "CAMARERO", avatar: "🧑‍🍳",
+          options: [
+            { text: "Gracias, que tenga un buen día.", next: "end_success" }
+          ]
+        },
+        leaving: {
+          npc: "De acuerdo, ¡que tenga un buen día!",
+          character: "CAMARERO", avatar: "🧑‍🍳",
+          options: [],
+          end: { emoji: "👋", title: "Conversación corta", text: "Has salido sin pedir nada. ¡Inténtalo de nuevo y practica pedir un café!" }
+        },
+        end_success: {
+          npc: "¡Aquí tiene su café! Que lo disfrute.",
+          character: "CAMARERO", avatar: "🧑‍🍳",
+          options: [],
+          end: { emoji: "☕", title: "¡Conversación completada!", text: "Has pedido tu café con éxito usando frases completas y educadas. ¡Muy bien!" }
+        }
+      }
+    },
+
+    calle: {
+      title: "ESCENA · PEDIR DIRECCIONES",
+      icon: "🧭",
+      tree: {
+        start: {
+          npc: "¡Hola! ¿Te puedo ayudar en algo?",
+          character: "VECINO", avatar: "🧑",
+          options: [
+            { text: "Hola, disculpa, ¿sabes dónde está la biblioteca?", next: "directions" },
+            { text: "¡Biblioteca! ¿Dónde?", next: "informal" }
+          ]
+        },
+        informal: {
+          npc: "Jaja, te entiendo, pero intenta preguntar de forma más completa: '¿Sabes dónde está...?' ¿Qué buscas?",
+          character: "VECINO", avatar: "🧑",
+          options: [
+            { text: "Perdona. ¿Sabes dónde está la biblioteca?", next: "directions" }
+          ]
+        },
+        directions: {
+          npc: "Sí, sigue todo recto y gira a la derecha en la segunda calle. Está al lado del parque.",
+          character: "VECINO", avatar: "🧑",
+          options: [
+            { text: "Muchas gracias, ¡muy amable!", next: "confirm" },
+            { text: "¿Está muy lejos de aquí?", next: "distance" }
+          ]
+        },
+        distance: {
+          npc: "No, son solo cinco minutos caminando.",
+          character: "VECINO", avatar: "🧑",
+          options: [
+            { text: "Perfecto, muchas gracias.", next: "confirm" }
+          ]
+        },
+        confirm: {
+          npc: "De nada, ¡que tengas un buen día!",
+          character: "VECINO", avatar: "🧑",
+          options: [],
+          end: { emoji: "🧭", title: "¡Direcciones conseguidas!", text: "Has pedido y entendido las indicaciones correctamente. ¡Genial!" }
+        }
+      }
+    },
+
+    tienda: {
+      title: "ESCENA · DE COMPRAS",
+      icon: "👕",
+      tree: {
+        start: {
+          npc: "¡Hola! Bienvenido a la tienda, ¿buscas algo en especial?",
+          character: "DEPENDIENTA", avatar: "🧑‍💼",
+          options: [
+            { text: "Hola, estoy buscando una camiseta de talla mediana.", next: "color" },
+            { text: "Solo estoy mirando, gracias.", next: "browsing" }
+          ]
+        },
+        browsing: {
+          npc: "¡Por supuesto! Si necesitas ayuda, aquí estaré.",
+          character: "DEPENDIENTA", avatar: "🧑‍💼",
+          options: [
+            { text: "En realidad, sí, busco una camiseta mediana.", next: "color" }
+          ]
+        },
+        color: {
+          npc: "Tenemos varias. ¿Qué color prefieres?",
+          character: "DEPENDIENTA", avatar: "🧑‍💼",
+          options: [
+            { text: "Azul, por favor.", next: "tryon" },
+            { text: "¿Cuál me recomiendas?", next: "recommend" }
+          ]
+        },
+        recommend: {
+          npc: "El verde está muy de moda esta temporada.",
+          character: "DEPENDIENTA", avatar: "🧑‍💼",
+          options: [
+            { text: "Vale, probaré la verde, gracias.", next: "tryon" }
+          ]
+        },
+        tryon: {
+          npc: "Aquí tienes. Los probadores están al fondo a la izquierda.",
+          character: "DEPENDIENTA", avatar: "🧑‍💼",
+          options: [
+            { text: "Gracias, voy a probármela.", next: "end_success" }
+          ]
+        },
+        end_success: {
+          npc: "¿Qué tal te queda? ¿Te la llevas?",
+          character: "DEPENDIENTA", avatar: "🧑‍💼",
+          options: [],
+          end: { emoji: "🛍️", title: "¡Compra completada!", text: "Has pedido ayuda y elegido un producto con frases claras. ¡Muy bien hecho!" }
+        }
+      }
+    },
+
+    presentacion: {
+      title: "ESCENA · PRESENTARSE",
+      icon: "🙋",
+      tree: {
+        start: {
+          npc: "¡Hola! Soy Marta, encantada. ¿Cómo te llamas?",
+          character: "MARTA", avatar: "👩",
+          options: [
+            { text: "Hola Marta, encantado/a, me llamo Alex.", next: "from" },
+            { text: "Alex.", next: "informal" }
+          ]
+        },
+        informal: {
+          npc: "¡Hola Alex! Una forma más completa de responder sería: 'Me llamo Alex, encantado/a'. ¿De dónde eres?",
+          character: "MARTA", avatar: "👩",
+          options: [
+            { text: "Tienes razón, gracias. Soy de España.", next: "from_done" }
+          ]
+        },
+        from: {
+          npc: "¡Encantada, Alex! ¿De dónde eres?",
+          character: "MARTA", avatar: "👩",
+          options: [
+            { text: "Soy de España, ¿y tú?", next: "from_done" }
+          ]
+        },
+        from_done: {
+          npc: "Yo soy de Argentina. ¿A qué te dedicas?",
+          character: "MARTA", avatar: "👩",
+          options: [
+            { text: "Estoy estudiando idiomas, me encanta aprender.", next: "end_success" },
+            { text: "Trabajo, pero también estudio por las tardes.", next: "end_success" }
+          ]
+        },
+        end_success: {
+          npc: "¡Qué interesante! Ha sido un placer hablar contigo.",
+          character: "MARTA", avatar: "👩",
+          options: [],
+          end: { emoji: "🤝", title: "¡Presentación completada!", text: "Has mantenido una conversación de presentación natural y educada. ¡Excelente!" }
+        }
+      }
+    }
+
+  };
+
+  const sceneOrder = ["cafeteria", "calle", "tienda", "presentacion"];
+  let currentScene = "cafeteria";
+
+  // Elementos del DOM
+  const npcText = document.getElementById("npc-text");
+  const optionsEl = document.getElementById("options");
+  const gameArea = document.getElementById("game-area");
+  const endBox = document.getElementById("end-box");
+  const endEmoji = document.getElementById("end-emoji");
+  const endTitle = document.getElementById("end-title");
+  const endText = document.getElementById("end-text");
+  const restartBtn = document.getElementById("restart-btn");
+  const nextSceneBtn = document.getElementById("next-scene-btn");
+  const avatarEl = document.getElementById("avatar");
+  const characterNameEl = document.getElementById("character-name");
+  const sceneLabel = document.getElementById("scene-label");
+  const sceneButtons = document.querySelectorAll(".scene-btn");
+
+  function renderNode(nodeId){
+    const tree = scenes[currentScene].tree;
+    const node = tree[nodeId];
+
+    npcText.style.animation = "none";
+    requestAnimationFrame(() => { npcText.style.animation = "fadeIn 0.3s ease"; });
+
+    npcText.textContent = node.npc;
+    avatarEl.textContent = node.avatar;
+    characterNameEl.textContent = node.character;
+
+    if(node.end){
+      gameArea.style.display = "none";
+      endBox.style.display = "block";
+      endEmoji.textContent = node.end.emoji;
+      endTitle.textContent = node.end.title;
+      endText.textContent = node.end.text;
+
+      // Marcar escena como completada en la barra lateral
+      const btn = document.querySelector(`.scene-btn[data-scene="${currentScene}"]`);
+      btn.classList.add("completed");
+
+      // Mostrar/ocultar botón de siguiente escena
+      const idx = sceneOrder.indexOf(currentScene);
+      nextSceneBtn.style.display = (idx < sceneOrder.length - 1) ? "inline-block" : "none";
+
+      return;
+    }
+
+    gameArea.style.display = "block";
+    endBox.style.display = "none";
+
+    optionsEl.innerHTML = "";
+    node.options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "option";
+      btn.textContent = "“" + opt.text + "”";
+      btn.addEventListener("click", () => renderNode(opt.next));
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function loadScene(sceneId){
+    currentScene = sceneId;
+    sceneLabel.textContent = scenes[sceneId].title;
+
+    sceneButtons.forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.scene === sceneId);
+    });
+
+    renderNode("start");
+  }
+
+  // Eventos de la barra lateral
+  sceneButtons.forEach(btn => {
+    btn.addEventListener("click", () => loadScene(btn.dataset.scene));
+  });
+
+  restartBtn.addEventListener("click", () => renderNode("start"));
+
+  nextSceneBtn.addEventListener("click", () => {
+    const idx = sceneOrder.indexOf(currentScene);
+    if(idx < sceneOrder.length - 1){
+      loadScene(sceneOrder[idx + 1]);
+    }
+  });
+
+  loadScene("cafeteria");
+
+</script>
+
+</body>
+</html>
