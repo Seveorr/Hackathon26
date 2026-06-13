@@ -14,7 +14,7 @@
         <div class="phase-header">Joc 2: Identificar Emocions</div>
 
         <div class="main-container">
-            
+
             <div class="sidebar">
                 <h3>Progrés</h3>
                 <div id="progressContainer" class="progress-container">
@@ -30,10 +30,11 @@
             </div>
 
             <div class="card">
-                
+
                 <div class="game-area">
-                    
-                    <div id="game-card" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+
+                    <div id="game-card"
+                        style="width: 100%; display: flex; flex-direction: column; align-items: center;">
                         <h1>🎭 Joc d'Emocions</h1>
                         <div>
                             <div class="score-badge"><span id="score">0</span>&nbsp;Encerts</div>
@@ -43,7 +44,8 @@
                         <div id="options" class="options-grid"></div>
                     </div>
 
-                    <div id="end-screen" style="width: 100%; display: none; flex-direction: column; align-items: center;">
+                    <div id="end-screen"
+                        style="width: 100%; display: none; flex-direction: column; align-items: center;">
                         <div class="face" id="end-face">🏆</div>
                         <h1 id="end-title">Bona feina!</h1>
                         <h2 id="end-text" style="color: #555; margin-bottom: 20px;">Has encertat X de 8</h2>
@@ -75,177 +77,229 @@
     </div>
 
     <script>
-    const emotions = [
-        { face: "😊", name: "Felicitat" },
-        { face: "😢", name: "Tristesa" },
-        { face: "😠", name: "Enuig" },
-        { face: "😨", name: "Por" },
-        { face: "😲", name: "Sorpresa" },
-        { face: "🤢", name: "Fastig" },
-        { face: "😴", name: "Cansanci" },
-        { face: "😍", name: "Amor" },
-        { face: "😳", name: "Vergonya" },
-        { face: "😎", name: "Confiansa" },
-        { face: "😐", name: "Indiferència" },
-        { face: "😇", name: "Puresa" },
-        { face: "🤔", name: "Confusió" },
-        { face: "😤", name: "Frustració" },
-        { face: "😜", name: "Diversió" },
-        { face: "😞", name: "Decepció" },
-        { face: "😡", name: "Furia" },
-        { face: "😰", name: "Ansietat" },
-        { face: "😌", name: "Alleujament" },
-        { face: "🤯", name: "Xoc" }
-    ];
-    
-    const TOTAL_ROUNDS = 8;
-    let round = 0;
-    let score = 0;
-    let currentAnswer = "";
-    let shuffled = [];
-    
-    const faceEl = document.getElementById("face");
-    const optionsEl = document.getElementById("options");
-    const feedbackEl = document.getElementById("feedback");
-    const nextBtn = document.getElementById("next-btn");
-    const scoreEl = document.getElementById("score");
-    const gameCard = document.getElementById("game-card");
-    const endScreen = document.getElementById("end-screen");
-    const endTitle = document.getElementById("end-title");
-    const endText = document.getElementById("end-text");
-    const endFace = document.getElementById("end-face");
-    const restartBtn = document.getElementById("restart-btn");
-    const modal = document.getElementById("exitModal");
-    
-    function showExitModal() { modal.classList.add("active"); }
-    function hideExitModal() { modal.classList.remove("active"); }
-    function redirectToMenu() { window.location.href = "menu.html"; }
+        const emotions = [
+            { face: "😊", name: "Felicitat" },
+            { face: "😢", name: "Tristesa" },
+            { face: "😠", name: "Enuig" },
+            { face: "😨", name: "Por" },
+            { face: "😲", name: "Sorpresa" },
+            { face: "🤢", name: "Fastig" },
+            { face: "😴", name: "Cansanci" },
+            { face: "😍", name: "Amor" },
+            { face: "😳", name: "Vergonya" },
+            { face: "😎", name: "Confiansa" },
+            { face: "😐", name: "Indiferència" },
+            { face: "😇", name: "Puresa" },
+            { face: "🤔", name: "Confusió" },
+            { face: "😤", name: "Frustració" },
+            { face: "😜", name: "Diversió" },
+            { face: "😞", name: "Decepció" },
+            { face: "😡", name: "Furia" },
+            { face: "😰", name: "Ansietat" },
+            { face: "😌", name: "Alleujament" },
+            { face: "🤯", name: "Xoc" }
+        ];
 
-    function shuffle(arr){
-        const copy = [...arr];
-        for(let i = copy.length - 1; i > 0; i--){
-            const j = Math.floor(Math.random() * (i + 1));
-            [copy[i], copy[j]] = [copy[j], copy[i]];
+        const TOTAL_ROUNDS = 8;
+        let round = 0;
+        let score = 0;
+        let currentAnswer = "";
+        let shuffled = [];
+
+        const faceEl = document.getElementById("face");
+        const optionsEl = document.getElementById("options");
+        const feedbackEl = document.getElementById("feedback");
+        const nextBtn = document.getElementById("next-btn");
+        const scoreEl = document.getElementById("score");
+        const gameCard = document.getElementById("game-card");
+        const endScreen = document.getElementById("end-screen");
+        const endTitle = document.getElementById("end-title");
+        const endText = document.getElementById("end-text");
+        const endFace = document.getElementById("end-face");
+        const restartBtn = document.getElementById("restart-btn");
+        const modal = document.getElementById("exitModal");
+
+        function showExitModal() { modal.classList.add("active"); }
+        function hideExitModal() { modal.classList.remove("active"); }
+        function redirectToMenu() { window.location.href = "menu.html"; }
+
+        function shuffle(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
         }
-        return copy;
-    }
-    
-    function updateProgressCircle(isCorrect) {
-        const circle = document.getElementById(`c${round}`);
-        if (circle) {
-            if (isCorrect) {
-                circle.className = "circle correct";
-                circle.textContent = "✓";
-            } else {
-                circle.className = "circle incorrect";
-                circle.textContent = "✕";
+
+        function updateProgressCircle(isCorrect) {
+            const circle = document.getElementById(`c${round}`);
+            if (circle) {
+                if (isCorrect) {
+                    circle.className = "circle correct";
+                    circle.textContent = "✓";
+                } else {
+                    circle.className = "circle incorrect";
+                    circle.textContent = "✕";
+                }
             }
         }
-    }
 
-    function resetProgressBar() {
-        for (let i = 1; i <= TOTAL_ROUNDS; i++) {
-            const circle = document.getElementById(`c${i}`);
-            if (circle) { circle.className = "circle"; circle.textContent = i; }
+        function resetProgressBar() {
+            for (let i = 1; i <= TOTAL_ROUNDS; i++) {
+                const circle = document.getElementById(`c${i}`);
+                if (circle) { circle.className = "circle"; circle.textContent = i; }
+            }
         }
-    }
 
-    function startGame(){
-        round = 0;
-        score = 0;
-        shuffled = shuffle(emotions).slice(0, TOTAL_ROUNDS);
-        endScreen.style.display = "none";
-        gameCard.style.display = "flex";
-        resetProgressBar();
-        nextRound();
-    }
-    
-    function nextRound(){
-        if(round >= TOTAL_ROUNDS){
-            showEnd();
-            return;
+        // Modificació: Separem el mètode que reinicia de zero per si de cas, per evitar col·lidir amb la petició inicial
+        function startGame() {
+            round = 0;
+            score = 0;
+            shuffled = shuffle(emotions).slice(0, TOTAL_ROUNDS);
+            endScreen.style.display = "none";
+            gameCard.style.display = "flex";
+            resetProgressBar();
+            nextRound();
         }
-    
-        feedbackEl.textContent = "";
-        nextBtn.style.display = "none";
-    
-        const current = shuffled[round];
-        currentAnswer = current.name;
-        faceEl.textContent = current.face;
-        
-        faceEl.style.animation = "none";
-        requestAnimationFrame(() => { faceEl.style.animation = "pop 0.35s ease"; });
-    
-        const distractors = shuffle(
-            emotions.filter(e => e.name !== currentAnswer)
-        ).slice(0, 3).map(e => e.name);
-    
-        const allOptions = shuffle([currentAnswer, ...distractors]);
-    
-        optionsEl.innerHTML = "";
-        allOptions.forEach(name => {
-            const btn = document.createElement("button");
-            btn.className = "option-btn";
-            btn.textContent = name;
-            btn.addEventListener("click", () => selectOption(btn, name));
-            optionsEl.appendChild(btn); // Codi reparat aquí completament
-        });
-    
-        round++;
-        scoreEl.textContent = score;
-    }
-    
-    function selectOption(button, chosen){
-        const allButtons = optionsEl.querySelectorAll(".option-btn");
-        allButtons.forEach(b => b.classList.add("disabled"));
-    
-        const isCorrect = (chosen === currentAnswer);
-        updateProgressCircle(isCorrect);
 
-        if(isCorrect){
-            button.classList.add("correct");
-            feedbackEl.innerHTML = "<span style='color: #4CAF50;'>✅ Correcte! És " + currentAnswer.toLowerCase() + ".</span>";
-            score++;
-            scoreEl.textContent = score;
-        } else {
-            button.classList.add("wrong");
-            allButtons.forEach(b => {
-                if(b.textContent === currentAnswer) b.classList.add("correct");
+        function nextRound() {
+            if (round >= TOTAL_ROUNDS) {
+                showEnd();
+                return;
+            }
+
+            feedbackEl.textContent = "";
+            nextBtn.style.display = "none";
+
+            const current = shuffled[round];
+            currentAnswer = current.name;
+            faceEl.textContent = current.face;
+
+            faceEl.style.animation = "none";
+            requestAnimationFrame(() => { faceEl.style.animation = "pop 0.35s ease"; });
+
+            const distractors = shuffle(
+                emotions.filter(e => e.name !== currentAnswer)
+            ).slice(0, 3).map(e => e.name);
+
+            const allOptions = shuffle([currentAnswer, ...distractors]);
+
+            optionsEl.innerHTML = "";
+            allOptions.forEach(name => {
+                const btn = document.createElement("button");
+                btn.className = "option-btn";
+                btn.textContent = name;
+                btn.addEventListener("click", () => selectOption(btn, name));
+                optionsEl.appendChild(btn);
             });
-            feedbackEl.innerHTML = "<span style='color: #F44336;'>❌ Gairebé... la resposta correcta era " + currentAnswer.toLowerCase() + ".</span>";
+
+            round++;
+            scoreEl.textContent = score;
         }
-    
-        nextBtn.style.display = "inline-block";
-    }
-    
-    function showEnd(){
-        gameCard.style.display = "none";
-        endScreen.style.display = "flex";
-        feedbackEl.textContent = "";
-        nextBtn.style.display = "none";
-    
-        let msg, face;
-        if(score === TOTAL_ROUNDS){
-            msg = "Perfecte! Ets un expert en emocions.";
-            face = "🏆";
-        } else if(score >= TOTAL_ROUNDS * 0.6){
-            msg = "Molt bé! Reconeixes les emocions cada vegada millor.";
-            face = "🌟";
-        } else {
-            msg = "Segueix practicant! Cada emoció té la seva pròpia careta.";
-            face = "💪";
+
+        function selectOption(button, chosen) {
+            const allButtons = optionsEl.querySelectorAll(".option-btn");
+            allButtons.forEach(b => b.classList.add("disabled"));
+
+            const isCorrect = (chosen === currentAnswer);
+            updateProgressCircle(isCorrect);
+
+            if (isCorrect) {
+                button.classList.add("correct");
+                feedbackEl.innerHTML = "<span style='color: #4CAF50;'>✅ Correcte! És " + currentAnswer.toLowerCase() + ".</span>";
+                score++;
+                scoreEl.textContent = score;
+            } else {
+                button.classList.add("wrong");
+                allButtons.forEach(b => {
+                    if (b.textContent === currentAnswer) b.classList.add("correct");
+                });
+                feedbackEl.innerHTML = "<span style='color: #F44336;'>❌ Gairebé... la resposta correcta era " + currentAnswer.toLowerCase() + ".</span>";
+            }
+
+            nextBtn.style.display = "inline-block";
         }
-    
-        endFace.textContent = face;
-        endTitle.textContent = msg;
-        endText.textContent = `Has encertat ${score} de ${TOTAL_ROUNDS}`;
-    }
-    
-    nextBtn.addEventListener("click", nextRound);
-    restartBtn.addEventListener("click", startGame);
-    
-    startGame();
-</script>
+
+        // Funció capturadora per a l'autoguardat de CodeLearn
+        window.getActualGameState = function() {
+            return {
+                ronda_actual: round,
+                punts_actuals: score,
+                timestamp: Date.now()
+            };
+        };
+
+        function showEnd() {
+            gameCard.style.display = "none";
+            endScreen.style.display = "flex";
+            feedbackEl.textContent = "";
+            nextBtn.style.display = "none";
+
+            let msg, face;
+            if (score === TOTAL_ROUNDS) {
+                msg = "Perfecte! Ets un expert en emocions.";
+                face = "🏆";
+            } else if (score >= TOTAL_ROUNDS * 0.6) {
+                msg = "Molt bé! Reconeixes les emocions cada vegada millor.";
+                face = "🌟";
+            } else {
+                msg = "Segueix practicant! Cada emoció té la seva pròpia careta.";
+                face = "💪";
+            }
+
+            endFace.textContent = face;
+            endTitle.textContent = msg;
+            endText.textContent = `Has encertat ${score} de ${TOTAL_ROUNDS}`;
+
+            // Cridem al tancament automàtic de la partida al servidor
+            if (window.finalitzarPartidaAPI) {
+                window.finalitzarPartidaAPI(score);
+            }
+        }
+
+        nextBtn.addEventListener("click", nextRound);
+        
+        // Si cliquen reiniciar, s'iniciarà una nova ronda gràfica, però demanarem un nou id de joc abans
+        restartBtn.addEventListener("click", () => {
+            if (window.reiniciarPartidaAPI) {
+                window.reiniciarPartidaAPI();
+            } else {
+                startGame();
+            }
+        });
+    </script>
+
+    <script type="module">
+        import GameService from './GameService.js';
+        const gameService = new GameService();
+
+        function arrencarFluxServidor() {
+            gameService.startGame()
+                .then(config => {
+                    console.log("Joc 2 sincronitzat amb el servidor. Seed obtinguda.");
+                    startGame();
+                })
+                .catch(err => {
+                    console.error("Error connectant amb l'API. Executant joc en local.", err);
+                    startGame();
+                });
+        }
+
+        // Enllaçar l'inici automàtic de l'API quan l'HTML estigui a punt
+        window.addEventListener('DOMContentLoaded', arrencarFluxServidor);
+
+        // Handler global per enviar el tancament a l'API
+        window.finalitzarPartidaAPI = function(puntuacioFinal) {
+            const estatFinal = window.getActualGameState();
+            gameService.finalizeGame(estatFinal, puntuacioFinal);
+        };
+
+        // Handler per quan volen reciclar la pantalla final i generar una nova partida a CodeLearn
+        window.reiniciarPartidaAPI = function() {
+            arrencarFluxServidor();
+        };
+    </script>
 </body>
 
 </html>
