@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LanguageQuest | Aprèn i comunica't</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #10b981;
+            --text: #1f2937;
+            --card: #ffffff;
+        }
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; background: #f3f6fa; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 900px; }
+        
+        header { text-align: center; margin-bottom: 50px; }
+        .logo { font-size: 4rem; }
+        h1 { font-size: 3rem; color: var(--text); }
+        
+        .menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .game-card { background: var(--card); border-radius: 24px; padding: 30px; box-shadow: 0 8px 25px rgba(0,0,0,.1); text-decoration: none; color: inherit; transition: .3s; }
+        .game-card:hover { transform: translateY(-6px); border: 2px solid var(--primary); }
+        
+        .btn-info { background: #6b7280; color: white; padding: 15px 30px; border-radius: 12px; text-decoration: none; font-weight: bold; display: inline-block; }
+        
+        /* Secció de descripció detallada */
+        #descripcio { background: white; padding: 40px; border-radius: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); line-height: 1.6; }
+        .public-target { background: #f8fafc; padding: 15px; border-left: 5px solid var(--primary); margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">🌍</div>
+            <h1>LanguageQuest</h1>
+        </header>
+
+        <section id="descripcio">
+            <h2>Què és LanguageQuest?</h2>
+            <p>LanguageQuest és una plataforma de gamificació centrada en el desenvolupament de la <strong>competència pragmàtica</strong>. No només ensenyem paraules, sinó el <em>context social</em> per utilitzar-les correctament.</p>
+            
+            <h3>A qui va dirigit?</h3>
+            <div class="public-target">
+                <strong>1. Estudiants d'idiomes i persones nouvingudes:</strong> Ideal per perdre la por a l'error en interaccions quotidianes en un entorn segur.
+            </div>
+            <div class="public-target">
+                <strong>2. Col·lectius amb NEE (Necessitats Educatives Especials):</strong> Disseny accessible, amb suport visual i estructura predictible per a persones amb TEA o dificultats d'aprenentatge.
+            </div>
+            <div class="public-target">
+                <strong>3. Rehabilitació cognitiva:</strong> Útil per exercitar la presa de decisions i la comunicació en persones que es recuperen de lesions cerebrals o afàsies.
+            </div>
+            
+            <p>El nostre mètode es basa en el <em>feedback</em> immediat, la segmentació del llenguatge (<em>chunking</em>) i l'aprenentatge multimodal.</p>
+        </section>
+    </div>
+
+</body>
+</html>
