@@ -1,9 +1,10 @@
 /* --- ESTILS GENERALS COMPARTITS --- */
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden; 
+    overflow: hidden;
     font-family: Arial, sans-serif;
     background-color: #f0f2f5;
     user-select: none;
@@ -20,7 +21,7 @@ body {
     flex-direction: column;
     width: 95vw;
     max-width: 900px;
-    height: 92vh; 
+    height: 92vh;
     gap: 10px;
     box-sizing: border-box;
 }
@@ -33,16 +34,16 @@ body {
     text-align: center;
     font-size: 18px;
     font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    flex-shrink: 0; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
 }
 
 .main-container {
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     gap: 15px;
-    flex: 1; 
-    min-height: 0; 
+    flex: 1;
+    min-height: 0;
 }
 
 .card {
@@ -50,17 +51,30 @@ body {
     background: white;
     padding: 20px 30px;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
+    justify-content: space-between;
     box-sizing: border-box;
 }
 
-h1 { font-size: 24px; margin: 5px 0; }
-h2 { font-size: 18px; margin: 10px 0; color: #555; }
-.prompt { font-size: 18px; margin: 10px 0; color: #555; }
+h1 {
+    font-size: 24px;
+    margin: 5px 0;
+}
+
+h2 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #555;
+}
+
+.prompt {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #555;
+}
 
 /* --- BARRA LATERAL (IDÈNTICA PER AMBDÓS) --- */
 .sidebar {
@@ -68,7 +82,7 @@ h2 { font-size: 18px; margin: 10px 0; color: #555; }
     background: white;
     padding: 15px 10px;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -88,11 +102,11 @@ h2 { font-size: 18px; margin: 10px 0; color: #555; }
 .progress-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     position: relative;
     width: 100%;
-    flex: 1; 
+    flex: 1;
 }
 
 .progress-container::before {
@@ -159,7 +173,8 @@ h2 { font-size: 18px; margin: 10px 0; color: #555; }
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%; /* Força l'alineació vertical a l'espai central */
+    height: 100%;
+    /* Força l'alineació vertical a l'espai central */
 }
 
 /* --- DISSENY ESPECÍFIC DEL JOC 1 (ARROSSEGAR / DUOLINGO) --- */
@@ -181,17 +196,24 @@ h2 { font-size: 18px; margin: 10px 0; color: #555; }
     background-color: #f9fbfd;
     border-radius: 16px;
     display: flex;
-    flex-direction: row;        
-    justify-content: center;    
-    align-items: center;        
-    flex-wrap: wrap;            
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 12px;
     padding: 12px;
     box-sizing: border-box;
 }
 
-.target-label { font-size: 22px; font-weight: bold; color: #90CAF9; }
-.target-label-pic { font-size: 45px; }
+.target-label {
+    font-size: 22px;
+    font-weight: bold;
+    color: #90CAF9;
+}
+
+.target-label-pic {
+    font-size: 45px;
+}
 
 .drag-item {
     cursor: grab;
@@ -199,18 +221,29 @@ h2 { font-size: 18px; margin: 10px 0; color: #555; }
     border-radius: 12px;
     border: 2px solid #ccc;
     background: white;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     font-weight: bold;
     display: inline-block;
 }
-.drag-item:active { cursor: grabbing; }
-.item-pic { font-size: 35px; padding: 5px 15px; }
-.item-word { font-size: 18px; color: #333; }
 
-.options { 
-    display: flex; 
+.drag-item:active {
+    cursor: grabbing;
+}
+
+.item-pic {
+    font-size: 35px;
+    padding: 5px 15px;
+}
+
+.item-word {
+    font-size: 18px;
+    color: #333;
+}
+
+.options {
+    display: flex;
     flex-direction: row;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 15px;
@@ -270,8 +303,19 @@ h2 { font-size: 18px; margin: 10px 0; color: #555; }
 }
 
 /* --- COMMUTADORS DE PANTALLES I NOTIFICACIONS --- */
-.feedback { min-height: 24px; font-weight: bold; font-size: 18px; margin: 5px 0; }
-#msg { min-height: 24px; font-weight: bold; font-size: 18px; margin: 5px 0; }
+.feedback {
+    min-height: 24px;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+#msg {
+    min-height: 24px;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 5px 0;
+}
 
 /* --- SECCIÓ INFERIOR DE BOTONS --- */
 .exit-container {
@@ -294,9 +338,12 @@ h2 { font-size: 18px; margin: 10px 0; color: #555; }
     font-weight: bold;
     border-radius: 8px;
     cursor: pointer;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
-.btn-action:hover { background-color: #43A047; }
+
+.btn-action:hover {
+    background-color: #43A047;
+}
 
 .btn-exit {
     background-color: #e0e0e0;
@@ -308,32 +355,184 @@ h2 { font-size: 18px; margin: 10px 0; color: #555; }
     border-radius: 6px;
     cursor: pointer;
 }
-.btn-exit:hover { background-color: #d4d4d4; }
+
+.btn-exit:hover {
+    background-color: #d4d4d4;
+}
 
 /* --- FINESTRES MODALS D'ALERTA --- */
 .modal-overlay {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 10; opacity: 0; pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
     transition: opacity 0.3s ease;
 }
-.modal-overlay.active { opacity: 1; pointer-events: auto; }
-.modal-box {
-    background: white; padding: 25px; border-radius: 12px;
-    text-align: center; max-width: 380px; width: 90%;
-    transform: scale(0.8); transition: transform 0.3s ease;
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
 }
-.modal-overlay.active .modal-box { transform: scale(1); }
-.modal-buttons { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
-.btn-modal { padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 8px; cursor: pointer; border: none; }
-.btn-modal.confirm { background-color: #F44336; color: white; }
-.btn-modal.cancel { background-color: #e0e0e0; color: #333; }
+
+.modal-box {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-box {
+    transform: scale(1);
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-modal {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-modal.confirm {
+    background-color: #F44336;
+    color: white;
+}
+
+.btn-modal.cancel {
+    background-color: #e0e0e0;
+    color: #333;
+}
 
 /* --- ANIMACIONS --- */
 @keyframes pop {
-    0% { transform: scale(0.6); opacity: 0; }
-    80% { transform: scale(1.1); }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+        transform: scale(0.6);
+        opacity: 0;
+    }
+
+    80% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ========================= */
+/* JOC 3 - CONVERSES */
+/* ========================= */
+
+.dialogue-box {
+    width: 85%;
+    min-height: 120px;
+    padding: 20px;
+    border-radius: 16px;
+    background: #f9fbfd;
+    border: 3px solid #2196F3;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.dialogue-text {
+    font-size: 22px;
+    color: #333;
+    margin: 0;
+}
+
+.character {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.avatar {
+    font-size: 5rem;
+}
+
+.character-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+}
+
+.scene-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.scene-btn {
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    background: white;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .2s;
+}
+
+.scene-btn:hover {
+    border-color: #2196F3;
+}
+
+.scene-btn.active {
+    background: #E3F2FD;
+    border-color: #2196F3;
+}
+
+.scene-btn.completed {
+    background: #C8E6C9;
+    border-color: #4CAF50;
+}
+
+.speak-btn {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.speak-btn:hover {
+    background-color: #1976D2;
+}
+
+.end-box {
+    text-align: center;
+}
+
+.end-box .emoji {
+    font-size: 5rem;
+}
+
+.hint {
+    color: #666;
+    font-size: 14px;
+    margin-top: 15px;
 }
