@@ -29,13 +29,48 @@ body {
 .phase-header {
     background: #2196F3;
     color: white;
-    padding: 12px;
+    padding: 12px 20px;
+    /* Una mica més d'espai lateral */
     border-radius: 12px;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    /* Separa joc del grup dret */
+    align-items: center;
     font-size: 18px;
     font-weight: bold;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     flex-shrink: 0;
+}
+
+#gameTitle {
+    font-size: 20px;
+    letter-spacing: 0.5px;
+}
+
+.right-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    /* Espai entre el títol de la secció i la badge taronja */
+}
+
+.section-badge {
+    background: #FF9800;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* Estils per indicar encert/error al target-zone */
+.target-zone.correct-bg {
+    background-color: #c8e6c9 !important;
+    border-color: #4caf50 !important;
+}
+
+.target-zone.wrong-bg {
+    background-color: #ffcdd2 !important;
+    border-color: #f44336 !important;
 }
 
 .main-container {
@@ -345,19 +380,23 @@ h2 {
     background-color: #43A047;
 }
 
+/* Modifica la classe .btn-exit */
 .btn-exit {
-    background-color: #e0e0e0;
-    color: #333;
-    border: 1px solid #ccc;
-    padding: 6px 14px;
-    font-size: 13px;
+    background-color: #f44336;
+    /* Color vermell d'alerta */
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    font-size: 16px;
     font-weight: bold;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.2s;
 }
 
 .btn-exit:hover {
-    background-color: #d4d4d4;
+    background-color: #d32f2f;
 }
 
 /* --- FINESTRES MODALS D'ALERTA --- */

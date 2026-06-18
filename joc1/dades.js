@@ -19,9 +19,8 @@ const data = [
     { e: "🧸", w: "nino" }, { e: "🎒", w: "motxilla" }, { e: "✏️", w: "llapis" }, { e: "📚", w: "llibre" }, { e: "💻", w: "ordinador" },
     { e: "📱", w: "mòbil" }, { e: "📺", w: "televisió" }, { e: "👕", w: "samarreta" }, { e: "👟", w: "sabata" }, { e: "👓", w: "ulleres" },
     { e: "🌂", w: "parany" }, { e: "🚲", w: "bicicleta" }, { e: "⏰", w: "rellotge" }, { e: "🧼", w: "sabó" }, { e: "🥄", w: "cullerot" },
-    // Natura, transport i emocions
+    // Natura i transport
     { e: "☀️", w: "sol" }, { e: "🌙", w: "lluna" }, { e: "⭐", w: "estel" }, { e: "☁️", w: "núvol" }, { e: "🌧️", w: "pluja" },
     { e: "❄️", w: "neu" }, { e: "🔥", w: "foc" }, { e: "🌳", w: "arbre" }, { e: "🌸", w: "flor" }, { e: "🚗", w: "cotxe" },
-    { e: "🚌", w: "autobús" }, { e: "🚂", w: "tren" }, { e: "✈️", w: "avió" }, { e: "⛵", w: "vaixell" }, { e: "🚀", w: "coet" },
-    { e: "😀", w: "alegre" }, { e: "😢", w: "trist" }, { e: "😡", w: "enfadat" }, { e: "😱", w: "espantat" }, { e: "❤️", w: "amor" }
+    { e: "🚌", w: "autobús" }, { e: "🚂", w: "tren" }, { e: "✈️", w: "avió" }, { e: "⛵", w: "vaixell" }, { e: "🚀", w: "coet" }
 ];

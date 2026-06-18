@@ -4,14 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Joc de Pictogrames</title>
+    <title>Pictomatcher</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
     <div class="game-wrapper">
-        <div id="phaseHeader" class="phase-header">Secció 1 / 3: Relacionar paraules i pictogrames</div>
+        <div id="phaseHeader" class="phase-header">
+            <span id="gameTitle">Pictomatcher</span>
+            <div class="right-group">
+                <span id="headerTitle">Relacionar paraules i pictogrames</span>
+                <span id="sectionBadge" class="section-badge">Secció 1 / 3</span>
+            </div>
+        </div>
 
         <div class="main-container">
 
@@ -33,7 +39,6 @@
 
             <div class="card">
                 <div>
-                    <h1>🗣️ Joc de Pictogrames</h1>
                     <div>
                         <div class="score-badge"><span id="score">0</span>&nbsp;Punts</div>
                     </div>
@@ -50,7 +55,7 @@
 
                 <div class="exit-container">
                     <button id="actionBtn" class="btn-action" style="display:none;"></button>
-                    <button class="btn-exit" onclick="showExitModal()">🚪 Acabar Joc</button>
+                    <button class="btn-exit" onclick="showExitModal()">Acabar partida</button>
                 </div>
             </div>
 
@@ -59,7 +64,7 @@
 
     <div id="exitModal" class="modal-overlay">
         <div class="modal-box">
-            <h3>Alerta</h3>
+            <h3>Alerta!</h3>
             <p>Estàs segur que vols acabar la partida actual i tornar al menú?</p>
             <div class="modal-buttons">
                 <button class="btn-modal confirm" onclick="redirectToMenu()">Sí, vull sortir</button>
@@ -68,7 +73,7 @@
         </div>
     </div>
 
-    <script src="../dades.js"></script>
+    <script src="dades.js"></script>
 
     <script src="script.js"></script>
 </body>

@@ -20,16 +20,23 @@ const frasesComplexes = [
 function shuffle(a) { return [...a].sort(() => Math.random() - 0.5); }
 
 function updateHeader() {
+    const badge = document.getElementById("sectionBadge");
+    const title = document.getElementById("headerTitle");
+
+    badge.textContent = `Secció ${currentSection} / 3`;
+
     if (currentSection === 1) {
-        phaseHeader.textContent = "Secció 1 / 3: Relacionar paraules i pictogrames";
+        title.textContent = "Relacionar paraules i pictogrames";
     } else if (currentSection === 2) {
-        phaseHeader.textContent = "Secció 2 / 3: Construir frases complexes";
+        title.textContent = "Construir frases complexes";
     } else {
-        phaseHeader.textContent = "Secció 3 / 3: Situacions i contexts diaris";
+        title.textContent = "Situacions i contexts diaris";
     }
+
+    // El "Joc de Pictogrames" no cal actualitzar-lo aquí, 
+    // ja que és estàtic al HTML ara.
     scoreEl.textContent = score;
 }
-
 const modal = document.getElementById("exitModal");
 const phaseHeader = document.getElementById("phaseHeader");
 const question = document.getElementById("question");
@@ -158,12 +165,22 @@ function next() {
         resetProgressBar();
 
         if (currentSection > 3) {
+            // 1. Amaguem la barra lateral de progrés
+            document.querySelector('.sidebar').style.display = "none";
+            
+            // 2. Ajustem el disseny per centrar el contingut que queda
+            document.querySelector('.main-container').style.justifyContent = "center";
+            
+            // 3. Mostrem el missatge final i la puntuació
             question.textContent = "🎉 Enhorabona! Has completat totes les seccions.";
-            targetZone.innerHTML = `<div class="target-label">Partida Finalitzada</div>`;
+            targetZone.innerHTML = `<div class="target-label" style="font-size: 24px;">Partida Finalitzada</div>`;
             options.innerHTML = "";
             duoHint.style.display = "none";
             actionBtn.style.display = "none";
-            msg.innerHTML = `Puntuació final: <strong>${score} punts</strong>.`;
+            
+            // Afegim la puntuació amb una mica d'estil
+            msg.innerHTML = `<div style="font-size: 24px; margin: 20px 0;">Puntuació final: <strong>${score} punts</strong></div>`;
+            
             return;
         }
     }
@@ -280,16 +297,59 @@ function resolveRound(ok) {
 
     if (ok) {
         score += 10;
-        msg.textContent = "Correcte!";
+        targetZone.classList.add('correct-bg');
+
+        updateProgressCircle(ok);
+        questionInSectionIdx++;
+        updateHeader();
+        setTimeout(() => {
+            targetZone.classList.remove('correct-bg');
+            next();
+        }, 1500);
     } else {
         score = Math.max(0, score - 5);
-        msg.textContent = "Incorrecte! La resposta correcta era: " + targetZone.dataset.correct;
-    }
+        targetZone.classList.add('wrong-bg');
 
-    updateProgressCircle(ok);
-    questionInSectionIdx++;
-    updateHeader();
-    setTimeout(next, 1200);
+        // ... dins del bloc else de resolveRound ...
+        setTimeout(() => {
+            // Títol "Resposta correcta" amb mida ajustada
+            targetZone.innerHTML = `
+        <div style="font-size: 18px; font-weight: bold; color: #d32f2f; margin-bottom: 15px; text-transform: uppercase;">
+            Resposta correcta:
+        </div>`;
+
+            if (currentSection === 2) {
+                const correctDiv = document.createElement('div');
+                correctDiv.style.display = "flex";
+                correctDiv.style.gap = "6px";
+                correctDiv.style.justifyContent = "center";
+
+                correctAnswersOrder.forEach(pictograma => {
+                    const el = document.createElement('div');
+                    el.className = "drag-item item-pic";
+                    el.textContent = pictograma;
+                    // Reduïm la mida a 30px per equilibrar amb el text
+                    el.style.fontSize = "30px";
+                    el.style.padding = "5px 10px";
+                    correctDiv.appendChild(el);
+                });
+                targetZone.appendChild(correctDiv);
+            } else {
+                const correctVal = targetZone.dataset.correct;
+                // Mida 30px per a la resposta única també
+                targetZone.innerHTML += `<div class="drag-item item-pic" style="font-size: 30px; padding: 5px 15px;">${correctVal}</div>`;
+            }
+
+            updateProgressCircle(ok);
+            questionInSectionIdx++;
+            updateHeader();
+
+            setTimeout(() => {
+                targetZone.classList.remove('wrong-bg');
+                next();
+            }, 2000);
+        }, 1000);
+    }
 }
 
 initDragAndDrop();
