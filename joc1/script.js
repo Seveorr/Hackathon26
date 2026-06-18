@@ -36,6 +36,12 @@ function updateHeader() {
     // El "Joc de Pictogrames" no cal actualitzar-lo aquí, 
     // ja que és estàtic al HTML ara.
     scoreEl.textContent = score;
+
+    // Afegeix això a la teva funció updateHeader existent
+    const scoreLabel = document.getElementById("scoreLabel");
+    if (scoreLabel) {
+        scoreLabel.textContent = (score === 1) ? "Punt" : "Punts";
+    }
 }
 const modal = document.getElementById("exitModal");
 const phaseHeader = document.getElementById("phaseHeader");
@@ -165,22 +171,23 @@ function next() {
         resetProgressBar();
 
         if (currentSection > 3) {
-            // 1. Amaguem la barra lateral de progrés
             document.querySelector('.sidebar').style.display = "none";
-            
-            // 2. Ajustem el disseny per centrar el contingut que queda
             document.querySelector('.main-container').style.justifyContent = "center";
-            
-            // 3. Mostrem el missatge final i la puntuació
             question.textContent = "🎉 Enhorabona! Has completat totes les seccions.";
-            targetZone.innerHTML = `<div class="target-label" style="font-size: 24px;">Partida Finalitzada</div>`;
-            options.innerHTML = "";
+            targetZone.innerHTML = "";
+            options.innerHTML = "Partida finalitzada. Gràcies per jugar!";
             duoHint.style.display = "none";
             actionBtn.style.display = "none";
-            
-            // Afegim la puntuació amb una mica d'estil
+            const scoreLabel = document.getElementById("scoreLabel");
+            if (scoreLabel) {
+                scoreLabel.textContent = (score === 1) ? "Punt" : "Punts";
+            }
+            if (score === 1) {
+                msg.innerHTML = `<div style="font-size: 24px; margin: 20px 0;">Puntuació final: <strong>${score} punt</strong></div>`;
+            } else {
+                msg.innerHTML = `<div style="font-size: 24px; margin: 20px 0;">Puntuació final: <strong>${score} punts</strong></div>`;
+            }
             msg.innerHTML = `<div style="font-size: 24px; margin: 20px 0;">Puntuació final: <strong>${score} punts</strong></div>`;
-            
             return;
         }
     }
@@ -192,17 +199,23 @@ function next() {
     actionBtn.style.display = "none";
     updateHeader();
 
+    // Determinem quantes opcions volem (5 per seccions 1 i 3, 10 per secció 2)
+    const numOptions = (currentSection === 2) ? 10 : 5;
+
     if (currentSection === 1) {
         const correct = data[Math.floor(Math.random() * data.length)];
         const isWordToPic = Math.random() < 0.5;
+
+        // Agafem distractors segons numOptions
+        const distractors = shuffle(data.filter(x => x !== correct)).slice(0, numOptions - 1);
+        const finalOpts = shuffle([correct, ...distractors]);
 
         if (isWordToPic) {
             question.textContent = `Arrossega el pictograma correcte cap a la zona blanca:`;
             targetZone.innerHTML = `<div class="target-label">${correct.w.toUpperCase()}</div>`;
             targetZone.dataset.correct = correct.e;
 
-            const opts = shuffle([correct, ...shuffle(data.filter(x => x !== correct)).slice(0, 3)]);
-            opts.forEach((o, i) => {
+            finalOpts.forEach((o, i) => {
                 const div = document.createElement('div');
                 div.className = 'drag-item item-pic'; div.textContent = o.e;
                 div.draggable = true; div.id = `drag-${i}`;
@@ -214,8 +227,7 @@ function next() {
             targetZone.innerHTML = `<div class="target-label-pic">${correct.e}</div>`;
             targetZone.dataset.correct = correct.w;
 
-            const opts = shuffle([correct, ...shuffle(data.filter(x => x !== correct)).slice(0, 3)]);
-            opts.forEach((o, i) => {
+            finalOpts.forEach((o, i) => {
                 const div = document.createElement('div');
                 div.className = 'drag-item item-word'; div.textContent = o.w;
                 div.draggable = true; div.id = `drag-${i}`;
@@ -226,19 +238,21 @@ function next() {
     }
     else if (currentSection === 2) {
         const fraseSeleccionada = frasesComplexes[(questionInSectionIdx - 1) % frasesComplexes.length];
-
         question.textContent = `Ordena els pictogrames per traduir la frase:`;
         duoHint.textContent = `"${fraseSeleccionada.text}"`;
         duoHint.style.display = "block";
-
         correctAnswersOrder = fraseSeleccionada.ordre;
 
-        let distractor = data[Math.floor(Math.random() * data.length)].e;
-        while (correctAnswersOrder.includes(distractor)) {
-            distractor = data[Math.floor(Math.random() * data.length)].e;
+        // Omplim fins a 10 elements. Si els pictogrames correctes són pocs, afegim distractors
+        let distractors = [];
+        while (distractors.length < (numOptions - correctAnswersOrder.length)) {
+            let d = data[Math.floor(Math.random() * data.length)].e;
+            if (!correctAnswersOrder.includes(d) && !distractors.includes(d)) {
+                distractors.push(d);
+            }
         }
 
-        const allPieces = shuffle([...correctAnswersOrder, distractor]);
+        const allPieces = shuffle([...correctAnswersOrder, ...distractors]);
         allPieces.forEach((sym, i) => {
             const div = document.createElement('div');
             div.className = 'drag-item item-pic'; div.textContent = sym;
@@ -250,11 +264,11 @@ function next() {
     }
     else if (currentSection === 3) {
         const situacions = [
-            { q: "Està plovent molt fort a fora 🌧️, què necessites per no banyar-te?", correct: "🌂", opts: ["🪑", "🚲", "🍉"] },
-            { q: "Tens molta gana i vols esmorzar sa, què pots menjar? 🥣", correct: "🍎", opts: ["🔑", "🚗", "💻"] },
-            { q: "Fa molta calor i vols anar ràpid a la platja 🌊, quin transport agafes?", correct: "🚗", opts: ["🛏️", "🧸", "📚"] },
-            { q: "S'ha fet de nit i estàs molt cansat, on vas directament? 🌙", correct: "🛏️", opts: ["🍕", "🚀", "🧼"] },
-            { q: "Vols fer un dibuix molt bonic en un llibre, què haces servir?", correct: "🎨", opts: ["🐱", "🚂", "🍞"] }
+            { q: "Està plovent molt fort a fora 🌧️, què necessites per no banyar-te?", correct: "🌂", opts: ["🪑", "🚲", "🍉", "🚗", "🧸"] },
+            { q: "Tens molta gana i vols esmorzar sa, què pots menjar? 🥣", correct: "🍎", opts: ["🔑", "🚗", "💻", "🍕", "🚀"] },
+            { q: "Fa molta calor i vols anar ràpid a la platja 🌊, quin transport agafes?", correct: "🚗", opts: ["🛏️", "🧸", "📚", "🐱", "🚂"] },
+            { q: "S'ha fet de nit i estàs molt cansat, on vas directament? 🌙", correct: "🛏️", opts: ["🍕", "🚀", "🧼", "🎨", "🍞"] },
+            { q: "Vols fer un dibuix molt bonic en un llibre, què fas servir?", correct: "🎨", opts: ["🐱", "🚂", "🍞", "🔑", "💻"] }
         ];
 
         const sit = situacions[(questionInSectionIdx - 1) % situacions.length];
@@ -262,11 +276,16 @@ function next() {
         targetZone.innerHTML = `<div class="target-label">?</div>`;
         targetZone.dataset.correct = sit.correct;
 
-        const finalOpts = shuffle([sit.correct, ...sit.opts]);
+        // AQUÍ ÉS EL CANVI: 
+        // Agafem el correcte i 4 distractors del array opts per sumar 5 en total
+        const finalOpts = shuffle([sit.correct, ...sit.opts.slice(0, 4)]);
+
         finalOpts.forEach((opt, i) => {
             const div = document.createElement('div');
-            div.className = 'drag-item item-pic'; div.textContent = opt;
-            div.draggable = true; div.id = `drag-${i}`;
+            div.className = 'drag-item item-pic'; 
+            div.textContent = opt;
+            div.draggable = true; 
+            div.id = `drag-${i}`;
             makeElementDraggable(div);
             options.appendChild(div);
         });
@@ -296,7 +315,7 @@ function resolveRound(ok) {
     document.querySelectorAll('.drag-item').forEach(el => el.draggable = false);
 
     if (ok) {
-        score += 10;
+        score += 1;
         targetZone.classList.add('correct-bg');
 
         updateProgressCircle(ok);
@@ -307,7 +326,7 @@ function resolveRound(ok) {
             next();
         }, 1500);
     } else {
-        score = Math.max(0, score - 5);
+        score = Math.max(0, score - 2);
         targetZone.classList.add('wrong-bg');
 
         // ... dins del bloc else de resolveRound ...
