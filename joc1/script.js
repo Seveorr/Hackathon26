@@ -4,19 +4,6 @@ let questionInSectionIdx = 1;
 const maxQuestionsPerSection = 10;
 let correctAnswersOrder = [];
 
-const frasesComplexes = [
-    { text: "El nen menja una poma vermella", ordre: ["👦", "🍽️", "🍎", "🔴"] },
-    { text: "La nena llegeix un llibre gran", ordre: ["👧", "📖", "📚", "🏢"] },
-    { text: "El gos corre feliç pel parc", ordre: ["🐶", "🏃", "😀", "🌳"] },
-    { text: "El gat negre dorm al llit", ordre: ["🐱", "⚫", "😴", "🛏️"] },
-    { text: "El nen beu llet freda a casa", ordre: ["👦", "🥤", "🥛", "🏠"] },
-    { text: "La nena pinta una flor bonica", ordre: ["👧", "🎨", "🌸", "❤️"] },
-    { text: "El mico menja un plàtan groc", ordre: ["🐵", "🍽️", "🍌", "🟡"] },
-    { text: "El ocell vola pel cel blau", ordre: ["🐦", "🚀", "☁️", "🔵"] },
-    { text: "El cavall corre ràpid sota el sol", ordre: ["🐎", "🏃", "⚡", "☀️"] },
-    { text: "El peix neda content a l'aigua", ordre: ["🐟", "🏊", "😀", "💧"] }
-];
-
 function shuffle(a) { return [...a].sort(() => Math.random() - 0.5); }
 
 function updateHeader() {
@@ -174,8 +161,8 @@ function next() {
             document.querySelector('.sidebar').style.display = "none";
             document.querySelector('.main-container').style.justifyContent = "center";
             question.textContent = "🎉 Enhorabona! Has completat totes les seccions.";
-            targetZone.innerHTML = "";
-            options.innerHTML = "Partida finalitzada. Gràcies per jugar!";
+            targetZone.innerHTML = "Partida finalitzada. Gràcies per jugar!";
+            options.innerHTML = "";
             duoHint.style.display = "none";
             actionBtn.style.display = "none";
             const scoreLabel = document.getElementById("scoreLabel");
@@ -237,8 +224,8 @@ function next() {
         }
     }
     else if (currentSection === 2) {
-        const fraseSeleccionada = frasesComplexes[(questionInSectionIdx - 1) % frasesComplexes.length];
-        question.textContent = `Ordena els pictogrames per traduir la frase:`;
+        const fraseSeleccionada = frasesComplexes[Math.floor(Math.random() * frasesComplexes.length)];
+        question.textContent = `Arrossega i ordena la major quantitat de pictogrames per traduir la frase:`;
         duoHint.textContent = `"${fraseSeleccionada.text}"`;
         duoHint.style.display = "block";
         correctAnswersOrder = fraseSeleccionada.ordre;
@@ -263,15 +250,7 @@ function next() {
         });
     }
     else if (currentSection === 3) {
-        const situacions = [
-            { q: "Està plovent molt fort a fora 🌧️, què necessites per no banyar-te?", correct: "🌂", opts: ["🪑", "🚲", "🍉", "🚗", "🧸"] },
-            { q: "Tens molta gana i vols esmorzar sa, què pots menjar? 🥣", correct: "🍎", opts: ["🔑", "🚗", "💻", "🍕", "🚀"] },
-            { q: "Fa molta calor i vols anar ràpid a la platja 🌊, quin transport agafes?", correct: "🚗", opts: ["🛏️", "🧸", "📚", "🐱", "🚂"] },
-            { q: "S'ha fet de nit i estàs molt cansat, on vas directament? 🌙", correct: "🛏️", opts: ["🍕", "🚀", "🧼", "🎨", "🍞"] },
-            { q: "Vols fer un dibuix molt bonic en un llibre, què fas servir?", correct: "🎨", opts: ["🐱", "🚂", "🍞", "🔑", "💻"] }
-        ];
-
-        const sit = situacions[(questionInSectionIdx - 1) % situacions.length];
+        const sit = situacions[Math.floor(Math.random() * situacions.length)];
         question.textContent = `${sit.q}`;
         targetZone.innerHTML = `<div class="target-label">?</div>`;
         targetZone.dataset.correct = sit.correct;
@@ -282,9 +261,9 @@ function next() {
 
         finalOpts.forEach((opt, i) => {
             const div = document.createElement('div');
-            div.className = 'drag-item item-pic'; 
+            div.className = 'drag-item item-pic';
             div.textContent = opt;
-            div.draggable = true; 
+            div.draggable = true;
             div.id = `drag-${i}`;
             makeElementDraggable(div);
             options.appendChild(div);
