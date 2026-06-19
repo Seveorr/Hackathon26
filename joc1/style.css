@@ -262,6 +262,147 @@ h2 {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     font-weight: bold;
     display: inline-block;
+
+    animation: pop 0.35s ease;
+}
+
+.drag-item {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+@keyframes successPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.04);
+    }
+
+    60% {
+        transform: scale(0.98);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-8px);
+    }
+
+    40% {
+        transform: translateX(8px);
+    }
+
+    60% {
+        transform: translateX(-6px);
+    }
+
+    80% {
+        transform: translateX(6px);
+    }
+}
+
+.target-zone.wrong-bg {
+    background-color: #ffcdd2 !important;
+    border-color: #f44336 !important;
+    animation: shake 0.5s ease;
+}
+
+.circle.correct,
+.circle.incorrect {
+    animation: popCircle 0.4s ease;
+}
+
+@keyframes popCircle {
+    0% {
+        transform: scale(0);
+    }
+
+    70% {
+        transform: scale(1.25);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.score-badge.bump {
+    animation: scoreBump 0.4s ease;
+}
+
+@keyframes scoreBump {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.card {
+    transition: opacity 0.25s ease;
+}
+
+.card.fade-out {
+    opacity: 0;
+}
+
+@keyframes trophy {
+
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.final-message {
+    animation: trophy 0.8s ease;
+}
+
+.target-zone.correct-bg {
+    background-color: #c8e6c9 !important;
+    border-color: #4caf50 !important;
+    animation: successPulse 0.6s ease;
+}
+
+.drag-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.12);
+    border-color: #2196F3;
+}
+
+.drag-item.dragging {
+    transform: scale(1.1);
+    opacity: 0.8;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
 }
 
 .drag-item:active {
@@ -280,10 +421,13 @@ h2 {
 
 .options {
     display: flex;
-    flex-wrap: wrap; /* Permet que saltin de línia */
-    justify-content: center; /* Els centra horitzontalment */
+    flex-wrap: wrap;
+    /* Permet que saltin de línia */
+    justify-content: center;
+    /* Els centra horitzontalment */
     align-items: center;
-    gap: 8px; /* Controla l'espai entre ells (fes-lo més petit si vols) */
+    gap: 8px;
+    /* Controla l'espai entre ells (fes-lo més petit si vols) */
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
