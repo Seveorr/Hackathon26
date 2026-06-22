@@ -26,7 +26,7 @@ body {
 
 header {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 
 .logo {
@@ -70,6 +70,12 @@ h1 {
     display: inline-block;
 }
 
+.subtitle {
+    font-size: 1.2rem;
+    color: #4b5563;
+    margin-top: 10px;
+}
+
 /* Secció de descripció detallada */
 #descripcio {
     background: white;
@@ -102,4 +108,19 @@ h1 {
 
 .btn-exit:hover {
     background-color: #d32f2f;
+}
+
+.title-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    transition: transform 0.3s ease; /* Suavitzat de l'animació */
+}
+
+.title-link:hover {
+    transform: scale(1.05);
+}
+
+.title-link h1 {
+    margin: 0;
 }

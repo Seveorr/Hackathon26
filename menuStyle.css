@@ -122,3 +122,18 @@ h1 {
 .description-full h2 {
     margin: 0;
 }
+
+.title-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    transition: transform 0.3s ease; /* Suavitzat de l'animació */
+}
+
+.title-link:hover {
+    transform: scale(1.05);
+}
+
+.title-link h1 {
+    margin: 0;
+}
