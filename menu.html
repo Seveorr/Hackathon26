@@ -39,7 +39,7 @@
             <a href="joc1/index.html" class="game-card" tabindex="0" data-audio="pictomatcher">
                 <div class="game-icon" aria-hidden="true">🖼️</div>
                 <div class="game-title">Pictomatcher</div>
-                <div class="game-description">Relaciona pictogrames i paraules.</div>
+                <div class="game-description">Relaciona pictogrames amb paraules.</div>
             </a>
             <a href="joc2.html" class="game-card" tabindex="0" data-audio="troba_les_emocions">
                 <div class="game-icon" aria-hidden="true">😄</div>
@@ -57,108 +57,7 @@
             Accessibilitat</a>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const welcome = document.getElementById('welcome-screen');
-            const welcomeCards = [document.getElementById('acc-yes'), document.getElementById('acc-no')];
-            const btnConfig = document.getElementById('btn-accessibility');
-
-            // Funció unificada d'àudio
-            const playFocusAudio = (key, callback = null) => {
-                if (typeof playAudio === 'function') {
-                    playAudio(key, callback);
-                }
-            };
-
-            // --- 1. Lògica del Modal ---
-            if (!sessionStorage.getItem('visited')) {
-                welcome.style.display = 'flex';
-
-                // Benvinguda inicial
-                playFocusAudio('benvinguda_accessibilitat', () => {
-                    welcomeCards[0].focus();
-                    playFocusAudio(welcomeCards[0].getAttribute('data-audio'));
-                });
-
-                welcomeCards.forEach(card => {
-                    card.addEventListener('focus', () => {
-                        // Evitem que es solapi amb la benvinguda
-                        if (document.activeElement === card) playFocusAudio(card.getAttribute('data-audio'));
-                    });
-                });
-
-                document.addEventListener('keydown', function handleWelcome(e) {
-                    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-                        const nextFocus = document.activeElement === welcomeCards[0] ? welcomeCards[1] : welcomeCards[0];
-                        nextFocus.focus();
-                    } else if (e.key === 'Enter') {
-                        sessionStorage.setItem('visited', 'true');
-                        localStorage.setItem('accessibility', document.activeElement.id === 'acc-yes' ? 'true' : 'false');
-                        location.reload();
-                    }
-                });
-            }
-            // --- 2. Lògica del Menú Principal ---
-            else if (localStorage.getItem('accessibility') === 'true') {
-                activarAccessibilitat();
-            }
-
-            // --- 3. Botó configuració ---
-            if (btnConfig) {
-                btnConfig.addEventListener('click', () => {
-                    sessionStorage.removeItem('visited');
-                    localStorage.removeItem('accessibility');
-                    location.reload();
-                });
-            }
-        });
-
-        // Funció ÚNICA d'accessibilitat
-        function activarAccessibilitat() {
-            const ordreElements = [
-                '.title-link',
-                'a[href*="joc1"]',
-                'a[href*="joc2"]',
-                'a[href*="joc3"]',
-                '#btn-accessibility'
-            ];
-
-            const elements = ordreElements.map(sel => document.querySelector(sel)).filter(el => el !== null);
-            let index = 0;
-
-            const playElAudio = (el) => {
-                const key = el.getAttribute('data-audio') ||
-                    el.querySelector('.game-title')?.innerText.toLowerCase().replace(/ /g, '_');
-                if (typeof playAudio === 'function') playAudio(key);
-            };
-
-            // Focus i lectura inicial
-            if (elements.length > 0) {
-                elements[index].focus();
-                playElAudio(elements[index]);
-            }
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-                    index = (e.key === 'ArrowRight') ? (index + 1) : (index - 1);
-                    if (index < 0) index = elements.length - 1;
-                    if (index >= elements.length) index = 0;
-
-                    elements[index].focus();
-                    playElAudio(elements[index]);
-                } else if (e.key === 'Enter') {
-                    elements[index].click();
-                }
-            });
-
-            elements.forEach(el => {
-                el.addEventListener('mouseover', () => {
-                    el.focus();
-                    playElAudio(el);
-                });
-            });
-        }
-    </script>
+    <script src="scriptMenú.js" defer></script>
 </body>
 
 </html>
